@@ -56,11 +56,11 @@ How to use: tick a box (`[x]`) when a task is done and add a one-line note. Keep
 
 ## E. Final run and submission
 
-- [ ] E1 Final 518-case run on `gpt-6-luna` (about $0.3 to 0.6 expected). `output.csv` at repo root. Validate: `validate_file` in `code/planning/validator.py` (518 rows, sorted, valid JSON).
-- [ ] E2 README.md rewritten with setup and run instructions (the starter README is still in place).
-- [ ] E3 `code.zip`: `zip -r code.zip README.md code -x "*/__pycache__/*" "*/.venv/*" "*/.git/*" "*/.DS_Store"` (no dataset, no nested archives, no keys, no `.env`).
-- [ ] E4 `log.txt` complete and verified (every entry has `tool=` and `model=`).
-- [ ] E5 `agent-trace.zip` per `agent_trace_instructions.md` (Claude Code sessions plus the claude.ai planning chat export via Settings, Privacy, Export data).
+- [x] E1 (done: agent engine, 518 rows valid, 0 fallbacks, byte-identical on a clean no-key clone) Final 518-case run on `gpt-6-luna` (about $0.3 to 0.6 expected). `output.csv` at repo root. Validate: `validate_file` in `code/planning/validator.py` (518 rows, sorted, valid JSON).
+- [x] E2 (done: README.md rewritten) README.md rewritten with setup and run instructions (the starter README is still in place).
+- [x] E3 (done: python code/scripts/package.py builds and checks code.zip; zips are gitignored, rebuild before upload) `code.zip`: `zip -r code.zip README.md code -x "*/__pycache__/*" "*/.venv/*" "*/.git/*" "*/.DS_Store"` (no dataset, no nested archives, no keys, no `.env`).
+- [x] E4 (done: 27 entries, each with tool= and model=, no secrets; timestamps on entries before 24 Oct 21:08Z were estimated, see the correction entry) `log.txt` complete and verified (every entry has `tool=` and `model=`).
+- [~] E5 (staged for the cloud session: python code/scripts/stage_trace.py --label cloud; STILL TO DO by the user: Mac sessions, /export transcripts, claude.ai planning chat export; re-run staging after this session ends) `agent-trace.zip` per `agent_trace_instructions.md` (Claude Code sessions plus the claude.ai planning chat export via Settings, Privacy, Export data).
 - [ ] E6 Submit at https://www.hackerrank.com/contests/hackerrank-orchestrate-october26/challenges/ghost-data-still-exists and prepare for the AI interview (architecture, investigation approach, remediation planning, evaluation).
 
 ## Decision log

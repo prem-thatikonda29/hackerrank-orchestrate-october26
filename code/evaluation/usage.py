@@ -46,6 +46,8 @@ def write_usage_report(path: Path, model: str, vision_model: str, agent: dict, n
               f"- Estimated total cost: ${total_cost:.4f}; per request: ${total_cost / n_requests:.5f}.",
               f"- Cases that fell back to the rule-based baseline (agent error or contract violation): {len(agent.get('fallbacks', []))}"
               + (f" ({', '.join(agent['fallbacks'])})" if agent.get("fallbacks") else "") + ".",
-              "- Screenshot extraction is cached per image, so its counts are those of the extraction that produced the cache used by this run.", ""]
+              "- The per-case counts are read from the result cache (`cache/agent/<model>_<AGENT_VERSION>/`) that the real model calls of this configuration wrote; "
+              "rerunning `code/main.py` with that cache present makes no new calls and reproduces the same counts and the same `output.csv`. A cold run (empty cache) makes these calls again.",
+              "- Screenshot extraction is cached per image (`code/vision_cache/`), so its counts are those of the extraction that produced the cache used by this run.", ""]
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines), encoding="utf-8")

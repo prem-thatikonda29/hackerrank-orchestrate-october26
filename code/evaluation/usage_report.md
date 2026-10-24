@@ -11,4 +11,5 @@ Final full-dataset run: 518 requests. Provider: OpenAI (https://api.openai.com/v
 - Total tokens: 2,253,762; average per request: 4,351 tokens.
 - Estimated total cost: $0.3358; per request: $0.00065.
 - Cases that fell back to the rule-based baseline (agent error or contract violation): 0.
-- Screenshot extraction is cached per image, so its counts are those of the extraction that produced the cache used by this run.
+- The per-case counts are read from the result cache (`cache/agent/<model>_<AGENT_VERSION>/`) that the real model calls of this configuration wrote; rerunning `code/main.py` with that cache present makes no new calls and reproduces the same counts and the same `output.csv`. A cold run (empty cache) makes these calls again.
+- Screenshot extraction is cached per image (`code/vision_cache/`), so its counts are those of the extraction that produced the cache used by this run.

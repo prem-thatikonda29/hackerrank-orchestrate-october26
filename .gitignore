@@ -6,3 +6,4 @@ cache/
 runs/
 *.zip
 .DS_Store
+agent-trace/
