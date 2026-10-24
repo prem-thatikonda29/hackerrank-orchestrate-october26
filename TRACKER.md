@@ -60,7 +60,7 @@ How to use: tick a box (`[x]`) when a task is done and add a one-line note. Keep
 - [x] E2 (done: README.md rewritten) README.md rewritten with setup and run instructions (the starter README is still in place).
 - [x] E3 (done: python code/scripts/package.py builds and checks code.zip; zips are gitignored, rebuild before upload) `code.zip`: `zip -r code.zip README.md code -x "*/__pycache__/*" "*/.venv/*" "*/.git/*" "*/.DS_Store"` (no dataset, no nested archives, no keys, no `.env`).
 - [x] E4 (done: 27 entries, each with tool= and model=, no secrets; timestamps on entries before 24 Oct 21:08Z were estimated, see the correction entry) `log.txt` complete and verified (every entry has `tool=` and `model=`).
-- [~] E5 (staged for the cloud session: python code/scripts/stage_trace.py --label cloud; STILL TO DO by the user: Mac sessions, /export transcripts, claude.ai planning chat export; re-run staging after this session ends) `agent-trace.zip` per `agent_trace_instructions.md` (Claude Code sessions plus the claude.ai planning chat export via Settings, Privacy, Export data).
+- [x] E5 (scope decided by the user: this cloud session's transcript only, plus log.txt as the chat transcript; Mac sessions and the claude.ai planning chat are NOT included. Restage after the session ends: python code/scripts/stage_trace.py --label cloud) `agent-trace.zip` per `agent_trace_instructions.md` (Claude Code sessions plus the claude.ai planning chat export via Settings, Privacy, Export data).
 - [ ] E6 Submit at https://www.hackerrank.com/contests/hackerrank-orchestrate-october26/challenges/ghost-data-still-exists and prepare for the AI interview (architecture, investigation approach, remediation planning, evaluation).
 
 ## Decision log
