@@ -445,3 +445,24 @@ branch=handoff/baseline-pipeline
 repo_root=/home/user/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T21:15:00Z] Make the agent the decider with guards, wire main.py, generate usage report
+
+User Prompt (verbatim, secrets redacted):
+No, I don't think scrapping it would be a good idea for the submission itself, because the problem statement asks for an agent. I'm fine with a slight reduction in accuracy, because an accuracy of 100% is obviously overfitting, right? Having an agent is the right way to go, is what I feel.
+
+Agent Response Summary:
+Kept the agent as the default engine and challenged the premise that lower accuracy is a cure for overfitting. Added merge guards (agent state wins, omitted candidates keep the dossier reading, invented resources ignored, citations repaired), a baseline fallback, a versioned result cache and a usage report generator. Two independent 100-case runs now agree exactly and the full 518-row output equals the baseline with zero fallbacks.
+
+Actions:
+* Edited code/agent/agent.py, code/agent/run.py, code/main.py; added code/evaluation/usage.py
+* Ran samples, eval (518), two repeatability runs; regenerated output.csv and code/evaluation/usage_report.md
+* Fixed a stale-cache bug (cache keyed by model only) by versioning it
+
+Context:
+tool=Claude Code
+model=claude-sonnet-5-5
+branch=handoff/baseline-pipeline
+repo_root=/home/user/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none

@@ -35,6 +35,12 @@ How to use: tick a box (`[x]`) when a task is done and add a one-line note. Keep
 - [ ] C6 Smoke-test the agent on case_05, case_10, case_26, case_32 with a cheap model; compare with the baseline row.
 - [ ] C7 Agent run on all 32 samples scored. Agent must be at least as good as the baseline; otherwise use the baseline for those case families and document why.
 
+## Agent status (25 Oct session note)
+
+- [x] C-basic: `code/agent/{agent,run}.py` (LangChain `create_agent`, tools `get_observations` and `get_activity`, structured `Verdict`, merge guards, baseline fallback, versioned on-disk cache). `code/main.py` runs it by default (`--engine baseline` for no model calls).
+- Result: agent engine output equals the baseline on all 518 rows and 32 samples (0.875 exact rows). The agent changes about 430 state labels but the planner maps them to the same steps; it only has leverage where a label crosses a violation boundary, an intent decision, or an omission. Repeatability: 0 differing rows between two independent runs of 100 cases (the first design without the merge guards flipped 4 of 60).
+- Still open: C4 tracing (per-case JSONL), C3 middleware beyond the merge guard, D1 to D4 reports, E packaging. Overfitting: no held-out gold exists, so build the custom cases (D2) from patterns NOT used to tune the heuristics.
+
 ## D. Evaluation and reports
 
 - [ ] D1 `code/evaluation/evaluation_report.md`: case, step, field and sequence accuracy; baseline vs agent; failures found and fixes.

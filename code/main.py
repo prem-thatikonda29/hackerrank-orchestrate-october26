@@ -1,5 +1,6 @@
 """Entry point: build the evidence index, run every request in dataset/deletion_requests.csv and write output.csv at
-the repo root. For now every case goes through the rule-based baseline; the agent layer will slot in here."""
+the repo root. The default engine is the LLM investigation agent (code/agent) with the rule-based baseline as the
+per-case fallback; --engine baseline runs the baseline alone with no model calls (screenshots still need a cache)."""
 
 import argparse
 import sys
@@ -10,6 +11,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from index.build import Builder  # noqa: E402
 from index.store import Index  # noqa: E402
 from planning.validator import validate_file  # noqa: E402
+from agent.run import run_cases, usage_totals  # noqa: E402
+from evaluation.usage import write_usage_report  # noqa: E402
 from runner.baseline import run_case, write_rows  # noqa: E402
 from runner.investigate import load_cases  # noqa: E402
 
@@ -34,6 +37,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--split", choices=["sample", "eval"], default="eval")
     ap.add_argument("--out", help="default: output.csv at the repo root (eval) or runs/main_sample.csv (sample)")
+    ap.add_argument("--engine", choices=["agent", "baseline"], default="agent")
     ap.add_argument("--skip-index", action="store_true", help="reuse an existing build/index.sqlite")
     args = ap.parse_args()
 
@@ -42,7 +46,19 @@ def main() -> int:
         Builder().run()
     index = Index()
     cases = load_cases("sample_deletion_requests.csv" if args.split == "sample" else "deletion_requests.csv")
-    rows = [(c.case_id, *run_case(index, c)) for c in cases]
+    if args.engine == "agent":
+        import llm_config
+
+        model = llm_config.settings()["agent_model"]
+        results = run_cases(index, cases, model)
+        rows = [(cid, r["status"], r["steps"]) for cid, r in results.items()]
+        if args.split == "eval":
+            write_usage_report(REPO / "code" / "evaluation" / "usage_report.md", model, llm_config.settings()["vision_model"],
+                               usage_totals(results), len(cases))
+        fb = usage_totals(results)["fallbacks"]
+        print(f"agent engine: {len(rows) - len(fb)} agent rows, {len(fb)} baseline fallbacks")
+    else:
+        rows = [(c.case_id, *run_case(index, c)) for c in cases]
 
     default = REPO / "output.csv" if args.split == "eval" else REPO / "runs" / "main_sample.csv"
     out = Path(args.out) if args.out else default

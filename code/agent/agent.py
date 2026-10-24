@@ -18,8 +18,9 @@ from index.store import Index
 from index.vocab import CATEGORY_ACTION, system_for
 from planning.planner import STATES, RecordedResource, plan
 from planning.validator import validate_row
-from runner.investigate import Case, Dossier, absence_evidence, investigate
+from runner.investigate import Case, Dossier, absence_evidence, baseline_resources, investigate
 
+AGENT_VERSION = "v2"   # bump when the prompt, tools or merge logic change: it names the on-disk result cache
 CATEGORIES = tuple(CATEGORY_ACTION)
 DB_LOCK = threading.Lock()   # the agent runs parallel tool calls in threads; the index is one sqlite connection
 
@@ -94,13 +95,13 @@ def make_tools(index: Index, case: Case):
 
 
 def run_agent_case(index: Index, case: Case, model: str | None = None) -> dict:
-    """Returns {status, steps, verdict, usage, errors}. Falls back to nothing: the caller decides on fallback."""
+    """Returns {status, steps, verdict, overrides, usage, errors}. The agent's judgement is merged with the dossier by merge_verdict."""
     with DB_LOCK:
         d = investigate(index, case)
         prompt = build_prompt(index, d)
     llm = llm_config.chat_model(model, max_tokens=4000)
     agent = create_agent(llm, make_tools(index, case), system_prompt=SYSTEM_PROMPT, response_format=Verdict)
-    result = agent.invoke({"messages": [("user", prompt)]}, {"recursion_limit": 12})
+    result = agent.invoke({"messages": [("user", prompt)]}, {"recursion_limit": 24})
     verdict: Verdict = result["structured_response"]
     usage = {"input_tokens": 0, "output_tokens": 0, "calls": 0}
     for m in result["messages"]:
@@ -110,17 +111,38 @@ def run_agent_case(index: Index, case: Case, model: str | None = None) -> dict:
             usage["output_tokens"] += u.get("output_tokens", 0)
             usage["calls"] += 1
     if not verdict.authorizes_deletion:
-        return {"status": "NOT_APPLICABLE", "steps": [], "verdict": verdict.model_dump(), "usage": usage, "errors": []}
-    known = {c.resource_id for c in d.candidates}
+        return {"status": "NOT_APPLICABLE", "steps": [], "verdict": verdict.model_dump(), "overrides": [], "usage": usage, "errors": []}
     with DB_LOCK:
-        return _finish(index, case, verdict, usage, known)
+        recs, overrides = merge_verdict(index, d, verdict)
+        status, steps = plan(recs)
+        errors = validate_row(status, steps, case.audit_at, index.file_captured)
+    return {"status": status, "steps": steps, "verdict": verdict.model_dump(), "overrides": overrides, "usage": usage, "errors": errors}
 
 
-def _finish(index, case, verdict, usage, known) -> dict:
-    recs = [RecordedResource(system_for(r.resource_id), r.resource_id, r.category, r.observed_state,
-                             r.evidence_id if index.file_captured(r.evidence_id) and index.file_captured(r.evidence_id) <= case.audit_at else "")
-            for r in verdict.resources if r.resource_id]
-    status, steps = plan(recs)
-    errors = validate_row(status, steps, case.audit_at, index.file_captured)
-    return {"status": status, "steps": steps, "verdict": verdict.model_dump(), "usage": usage, "errors": errors,
-            "invented": sorted({r.resource_id for r in verdict.resources} - known)}
+def merge_verdict(index: Index, d: Dossier, verdict: Verdict) -> tuple[list[RecordedResource], list[dict]]:
+    """Agent judgement wins on state and category; code guards the rest.
+
+    * A candidate the agent leaves out keeps the dossier's reading (an evidence-linked resource is never dropped silently).
+    * A resource the dossier never offered is ignored (no invention).
+    * A citation must be a file captured at or before audit_at; otherwise the dossier's citation is used.
+    Every place the final record differs from the dossier is returned as an override so it can be audited.
+    """
+    audit_at = d.case.audit_at
+    base = {r.resource_id: r for r in baseline_resources(d, index)}
+    agent = {r.resource_id: r for r in verdict.resources}
+    out, overrides = [], []
+    for rid, b in base.items():
+        a = agent.get(rid)
+        if a is None:
+            overrides.append({"resource_id": rid, "kind": "agent_omitted", "kept": b.observed_state})
+            out.append(b)
+            continue
+        cap = index.file_captured(a.evidence_id) if a.evidence_id else None
+        evidence = a.evidence_id if cap and cap <= audit_at else b.evidence_id
+        final = RecordedResource(b.system_id, rid, a.category, a.observed_state, evidence)
+        if (final.category, final.observed_state) != (b.category, b.observed_state):
+            overrides.append({"resource_id": rid, "kind": "agent_changed", "from": [b.category, b.observed_state],
+                              "to": [a.category, a.observed_state], "rationale": a.rationale})
+        out.append(final)
+    overrides += [{"resource_id": rid, "kind": "agent_invented_ignored"} for rid in agent if rid not in base]
+    return out, overrides
