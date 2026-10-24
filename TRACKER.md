@@ -13,7 +13,8 @@ How to use: tick a box (`[x]`) when a task is done and add a one-line note. Keep
 - [x] A4 Scorer (`code/evaluation/scorer.py`).
 - [x] A5 Rule-based baseline (`code/runner/baseline.py`). Result on 32 samples: status 1.000, step F1 0.987, exact rows 0.875. Verify: `python code/runner/baseline.py --split sample && python code/evaluation/scorer.py runs/baseline_sample.csv`.
 - [x] A6 Baseline file for all 518 cases validates (`runs/baseline_eval.csv`: 345 INCOMPLETE, 163 COMPLETE, 10 NOT_APPLICABLE).
-- [x] A7 FreeLLMAPI router checked for tool calling (Groq `gpt-oss-120b`, `gpt-oss-20b`, `qwen3.8-27b` pass). Local-only; see HANDOFF.md.
+- [x] A7 Provider config (`code/llm_config.py`, OpenAI by default) and endpoint smoke test (`code/scripts/check_llm.py`). The local FreeLLMAPI router worked on the author's Mac but is not available in the cloud session.
+- [ ] A8 In the new session: add `OPENAI_API_KEY`, run `python code/scripts/check_llm.py` (expect PASS) and check that `gpt-6-luna` accepts images (`python code/index/vision.py --only account_admin`). If it does not, set `AGENT_MODEL` / `VISION_MODEL` to a model that does.
 
 ## B. Screenshots, PDFs and the early-audit family (next)
 
@@ -57,6 +58,7 @@ How to use: tick a box (`[x]`) when a task is done and add a one-line note. Keep
 | 24 Oct | Agent produces facts, code produces steps | Exact ordering and numbering must not depend on the LLM |
 | 24 Oct | LangChain 1.x `create_agent` + middleware, provider from `.env` | No Anthropic API access; provider-agnostic |
 | 24 Oct | Dev on Groq `gpt-oss-120b` via FreeLLMAPI, final run on OpenAI `gpt-6-luna` | Groq free tier is 200K tokens/day per model, too small for the full run |
+| 25 Oct | Superseded: OpenAI direct for everything (key in `.env`, `code/llm_config.py`) | FreeLLMAPI is local-only and unavailable in the cloud session; no free dev tier, so keep prompts lean, cache cases and cap spend (about $3.60 credit) |
 | 24 Oct | Link activity-only resources by timing + reported-status/result consistency | Primary accounts and anonymized analytics appear in no evidence file |
 | 24 Oct | Drop candidates whose latest evidence predates `requested_at` | Removed the one temporal decoy in the samples |
 | 24 Oct | Use `LINK_RESOURCE_IDENTITY` events as identity links for screenshot/PDF cases | They carry email and user_id for resources that images only show by resource ID |

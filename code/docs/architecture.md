@@ -224,6 +224,8 @@ Prices are from developers.openai.com/api/docs/pricing as of 24 Oct 2026.
 
 The provider is switched entirely in `.env` (`LLM_PROVIDER`, `AGENT_MODEL`); the code never changes.
 
+**Update 25 Oct: the plan is now OpenAI directly (no FreeLLMAPI, no free development tier).** `code/llm_config.py` reads `OPENAI_API_KEY` (or `LLM_API_KEY`), optional `LLM_BASE_URL`, `AGENT_MODEL` and `VISION_MODEL`; the default model is `gpt-6-luna`. Costs are in HANDOFF.md section 4. Budget cap and lean prompts matter more than before. The notes below record what was tested against the local router on 24 Oct.
+
 **Local FreeLLMAPI router** (`~/freellmapi`, Docker on Colima, `http://127.0.0.1:3001/v1`). It is OpenAI-compatible and used through `ChatOpenAI(base_url=LLM_BASE_URL, api_key=LLM_API_KEY)`.
 
 Tested 24 Oct 2026 with `code/scripts/check_llm.py`:

@@ -12,7 +12,7 @@ For each of 518 rows in `dataset/deletion_requests.csv`, decide whether deletion
 ## 2. Design (agreed)
 
 - **Agent produces facts, code produces steps.** An LLM agent (LangChain 1.x `create_agent`) investigates and records what it observed per resource. Deterministic code (`code/planning/planner.py`) turns recorded facts into sorted, numbered steps. The LLM never orders or numbers steps.
-- Provider-agnostic: model comes from `.env`. The user has no Anthropic API access.
+- Provider-agnostic: model and key come from `.env` through `code/llm_config.py`. The user has no Anthropic API access and will use their own OpenAI key.
 - Guardrails and tracing plan: `code/docs/architecture.md` sections 3 and 4.
 - A deterministic **baseline** (index + investigator + planner, no LLM) already exists and is the agent's fallback and the comparison row for the report.
 
@@ -27,7 +27,8 @@ Done (all in this repo, branch `handoff/baseline-pipeline`):
 | Planner and validator | `code/planning/` (validator accepts all 32 golden rows) |
 | Scorer | `code/evaluation/scorer.py` |
 | Baseline and linking | `code/runner/{baseline,investigate,linking,intent}.py` |
-| FreeLLMAPI smoke test | `code/scripts/check_llm.py` |
+| Provider config | `code/llm_config.py` (OpenAI by default) |
+| Endpoint smoke test | `code/scripts/check_llm.py` |
 | Vision extractor (partly run) | `code/index/vision.py` |
 | Status command | `code/scripts/status.py` |
 
@@ -44,14 +45,15 @@ python3 -m venv .venv && .venv/bin/pip install -r code/requirements.txt
 
 Do not rely on a global LangChain install: on the author's Mac it was broken (`langchain` 1.4.0 with `langgraph-prebuilt` 1.1.0). The pins in `code/requirements.txt` work together.
 
-Create `.env` in the repo root (gitignored, never commit it):
+Create `.env` in the repo root (gitignored, never commit it), or just export the variable. Provider decision: **OpenAI directly** (the user's own key). `code/llm_config.py` is the single place that reads the config; every script goes through it:
 
 ```
-LLM_BASE_URL=<OpenAI-compatible endpoint, e.g. https://api.openai.com/v1>
-LLM_API_KEY=<your key>
-AGENT_MODEL=<model id>
-VISION_MODEL=<a vision-capable model id>
+OPENAI_API_KEY=<your OpenAI key>       # LLM_API_KEY also works and wins if both are set
+AGENT_MODEL=gpt-6-luna                 # default if unset; confirm with check_llm.py --list
+VISION_MODEL=gpt-6-luna                # must accept images; unverified, test with: vision.py --only account_admin
 ```
+
+No base URL is needed (it defaults to `https://api.openai.com/v1`; set `LLM_BASE_URL` only for another OpenAI-compatible endpoint).
 
 Then:
 
@@ -60,12 +62,14 @@ Then:
 .venv/bin/python code/runner/baseline.py --split sample                    # runs/baseline_sample.csv
 .venv/bin/python code/evaluation/scorer.py runs/baseline_sample.csv --verbose   # expect exact rows 0.875
 .venv/bin/python code/scripts/status.py                                    # tracker progress
-.venv/bin/python code/scripts/check_llm.py --list                          # test an endpoint for tool calling
+.venv/bin/python code/scripts/check_llm.py --list                          # list models, then run without --list for a tool-calling check
 ```
 
-**The local FreeLLMAPI router will not exist in a cloud session.** On the author's Mac it ran in Docker (`~/freellmapi`, needs `colima start` then `docker compose up -d`) at `http://127.0.0.1:3001/v1`. Only three Groq-hosted models worked with its stored keys (`gpt-oss-120b`, `gpt-oss-20b`, `qwen3.8-27b`; the last also reads images). Groq free limits: 30 RPM, 1K requests/day, 8K tokens/minute, 200K tokens/day per model. Plan was Groq for development and OpenAI `gpt-6-luna` ($0.10 in / $0.01 cached / $0.50 out per 1M tokens, checked 24 Oct) for the final run. Use whatever provider the new session has, but keep requests lean: target 1 to 3 model calls and about 6K tokens per case.
+**Budget: all runs are now paid.** The user has about $3.60 of OpenAI credit and the free Groq tier from the local FreeLLMAPI router (Docker on the author's Mac, `http://127.0.0.1:3001/v1`) is gone, so there is no free development tier. Prices (developers.openai.com/api/docs/pricing, 24 Oct): `gpt-6-luna` $0.10 in / $0.01 cached / $0.50 out per 1M tokens. Rough costs with lean prompts (1 to 3 model calls, about 6K tokens per case): one 32-sample run about $0.05, the 11 screenshots under $0.05, the full 518-case run about $0.3 to 0.6. So: keep requests lean, cache per-case results on disk so reruns are free, and build the budget cap (`BUDGET_USD`, default 2.50, stop starting new cases past it and fall back to the baseline). Check the remaining credit in the OpenAI dashboard before the final run.
 
-`cache/`, `build/`, `runs/` and `.venv/` are gitignored. `cache/vision/` held 3 of 11 screenshot extractions, so re-run `code/index/vision.py` (it skips cached files and sleeps 12 s between calls).
+Old local-router facts, for reference only: it exposed Groq `gpt-oss-120b`, `gpt-oss-20b` and `qwen3.8-27b` (all passed tool calling; the last read images), with Groq limits of 30 RPM, 1K requests/day, 8K tokens/minute and 200K tokens/day per model.
+
+`cache/`, `build/`, `runs/` and `.venv/` are gitignored. `cache/vision/` held 3 of 11 screenshot extractions, so re-run `code/index/vision.py` (it skips cached files and sleeps 12 s between calls; the sleep was for Groq's per-minute limit and can be lowered with OpenAI).
 
 ## 5. Data rules found so far (all heuristics from the 32 gold samples; they raised exact rows from 41% to 87.5%)
 

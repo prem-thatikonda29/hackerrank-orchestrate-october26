@@ -1,6 +1,7 @@
-"""Smoke-test an OpenAI-compatible endpoint (e.g. a local FreeLLMAPI router) for tool calling.
+"""Smoke-test an OpenAI-compatible endpoint (OpenAI by default) for tool calling.
 
-Reads LLM_BASE_URL, LLM_API_KEY and AGENT_MODEL from the environment or the repo-root .env.
+Reads OPENAI_API_KEY / LLM_API_KEY, LLM_BASE_URL and AGENT_MODEL from the environment or the repo-root .env
+(see code/llm_config.py).
 Usage: python code/scripts/check_llm.py [--list] [--model MODEL]
 """
 
@@ -13,20 +14,9 @@ import urllib.request
 from pathlib import Path
 
 from langchain_core.tools import tool
-from langchain_openai import ChatOpenAI
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
-
-
-def load_env() -> None:
-    env_file = REPO_ROOT / ".env"
-    if not env_file.exists():
-        return
-    for line in env_file.read_text().splitlines():
-        line = line.strip()
-        if line and not line.startswith("#") and "=" in line:
-            key, value = line.split("=", 1)
-            os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import llm_config  # noqa: E402
 
 
 def list_models(base_url: str, api_key: str) -> list[str]:
@@ -41,8 +31,8 @@ def get_resource_state(resource_id: str) -> str:
     return json.dumps({"resource_id": resource_id, "state": "PRESENT", "evidence_id": "evidence_54"})
 
 
-def check_tool_calling(base_url: str, api_key: str, model: str) -> bool:
-    llm = ChatOpenAI(base_url=base_url, api_key=api_key, model=model, temperature=0, timeout=120)
+def check_tool_calling(model: str) -> bool:
+    llm = llm_config.chat_model(model)
     bound = llm.bind_tools([get_resource_state])
     messages = [("user", "Use the tool to look up account_005, then reply with its state in one word.")]
     started = time.time()
@@ -61,16 +51,15 @@ def check_tool_calling(base_url: str, api_key: str, model: str) -> bool:
 
 
 def main() -> int:
-    load_env()
+    cfg = llm_config.settings()
     parser = argparse.ArgumentParser()
     parser.add_argument("--list", action="store_true", help="list models the endpoint exposes")
-    parser.add_argument("--model", default=os.environ.get("AGENT_MODEL", "auto"))
+    parser.add_argument("--model", default=cfg["agent_model"])
     args = parser.parse_args()
 
-    base_url = os.environ.get("LLM_BASE_URL", "http://127.0.0.1:3001/v1")
-    api_key = os.environ.get("LLM_API_KEY")
+    base_url, api_key = cfg["base_url"], cfg["api_key"]
     if not api_key:
-        print("LLM_API_KEY is not set (add it to the repo-root .env).")
+        print("No API key: set OPENAI_API_KEY (or LLM_API_KEY) in the environment or the repo-root .env.")
         return 2
 
     if args.list:
@@ -79,7 +68,7 @@ def main() -> int:
         print("\n".join(models))
         return 0
 
-    ok = check_tool_calling(base_url, api_key, args.model)
+    ok = check_tool_calling(args.model)
     print("PASS" if ok else "FAIL")
     return 0 if ok else 1
 

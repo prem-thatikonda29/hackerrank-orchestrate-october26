@@ -289,3 +289,43 @@ repo_root=/Users/premthatikonda/Downloads/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
 
+## [2026-10-24T18:40:00Z] Confirm tracker and handoff files are on the pushed branch
+
+User Prompt (verbatim, secrets redacted):
+are the @TRACKER.md and @HANDOFF.md in the branch pushed as well?
+
+Agent Response Summary:
+Fetched the fork branch and confirmed via the GitHub contents API that HANDOFF.md (13,691 bytes) and TRACKER.md (6,615 bytes) exist on handoff/baseline-pipeline and are identical to the local copies (empty git diff against the fetched ref). No files were changed.
+
+Actions:
+* git fetch of fork/handoff/baseline-pipeline; gh api contents listing; git diff against the remote ref
+
+Context:
+tool=Claude Code
+model=claude-sonnet-5-5
+branch=handoff/baseline-pipeline
+repo_root=/Users/premthatikonda/Downloads/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none
+
+## [2026-10-24T18:50:00Z] Switch provider config to OpenAI directly
+
+User Prompt (verbatim, secrets redacted):
+cool. no freellmapi there. i'll use my openai api key itself.
+
+Agent Response Summary:
+Added code/llm_config.py as the single place that reads provider config (OPENAI_API_KEY or LLM_API_KEY, optional LLM_BASE_URL, AGENT_MODEL, VISION_MODEL; defaults to the OpenAI endpoint and gpt-6-luna) and routed code/scripts/check_llm.py and code/index/vision.py through it; the check script still passes against the local router. Updated HANDOFF.md, TRACKER.md (new task A8 and a superseding decision) and code/docs/architecture.md: with no free development tier every run is paid, so prompts stay lean, cases are cached and a spend cap is planned against the roughly $3.60 credit. Not verified: that gpt-6-luna accepts images or that the key works (no OpenAI key is available in this session).
+
+Actions:
+* Created code/llm_config.py; edited code/scripts/check_llm.py, code/index/vision.py, HANDOFF.md, TRACKER.md, code/docs/architecture.md
+* Ran py_compile and the tool-calling check against the local router (PASS)
+* Scanned staged changes for the local API key, committed and pushed to the same branch of the fork
+
+Context:
+tool=Claude Code
+model=claude-sonnet-5-5
+branch=handoff/baseline-pipeline
+repo_root=/Users/premthatikonda/Downloads/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none
+

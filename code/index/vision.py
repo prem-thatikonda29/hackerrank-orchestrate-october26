@@ -160,27 +160,16 @@ def call_model(llm, image_path: Path, retries: int = 6) -> tuple[dict, dict]:
     raise RuntimeError(f"vision extraction failed for {image_path.name}")
 
 
-def load_env() -> None:
-    env_file = REPO / ".env"
-    if env_file.exists():
-        for line in env_file.read_text().splitlines():
-            if "=" in line and not line.startswith("#"):
-                k, v = line.split("=", 1)
-                os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
-
-
 def main() -> int:
-    load_env()
+    import llm_config
+
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default=os.environ.get("VISION_MODEL", "qwen3.8-27b"))
+    ap.add_argument("--model", default=llm_config.settings()["vision_model"])
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--only", help="substring of the image file name")
     args = ap.parse_args()
 
-    from langchain_openai import ChatOpenAI
-
-    llm = ChatOpenAI(base_url=os.environ["LLM_BASE_URL"], api_key=os.environ["LLM_API_KEY"], model=args.model,
-                     temperature=0, timeout=120, max_tokens=3000)
+    llm = llm_config.chat_model(args.model, max_tokens=3000)
     vocab = Vocabulary()
     CACHE.mkdir(parents=True, exist_ok=True)
     with open(DATASET / "evidence_files.csv", encoding="utf-8") as fh:
