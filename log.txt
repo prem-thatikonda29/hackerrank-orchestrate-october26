@@ -383,7 +383,7 @@ repo_root=/home/user/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
 
-## [2026-10-24T19:05:00Z] Network unblocked; A8 checks; write handoff for a new chat
+## [2026-10-24T19:49:05Z] Network unblocked; A8 checks; write handoff for a new chat
 
 User Prompt (verbatim, secrets redacted):
 i added the environment variable. check handoff.md for context on where we are
@@ -405,7 +405,7 @@ repo_root=/home/user/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
 
-## [2026-10-24T19:40:00Z] Continue in this session: screenshot and PDF evidence (B1 to B6)
+## [2026-10-24T19:59:23Z] Continue in this session: screenshot and PDF evidence (B1 to B6)
 
 User Prompt (verbatim, secrets redacted):
 no need of a new chat right?  we can continue here itself
@@ -426,7 +426,7 @@ repo_root=/home/user/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
 
-## [2026-10-24T20:30:00Z] Overfitting check and basic LLM agent vs baseline
+## [2026-10-24T20:37:08Z] Overfitting check and basic LLM agent vs baseline
 
 User Prompt (verbatim, secrets redacted):
 Let's build a basic one and see how it works compared to the baseline that we have right now. If it's actually hurting determinism, let's scrape it. But one thing I don't understand, how are we hitting 100% accuracy? This is probably overfitting, don't you think?
@@ -446,7 +446,7 @@ repo_root=/home/user/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
 
-## [2026-10-24T21:15:00Z] Make the agent the decider with guards, wire main.py, generate usage report
+## [2026-10-24T20:51:59Z] Make the agent the decider with guards, wire main.py, generate usage report
 
 User Prompt (verbatim, secrets redacted):
 No, I don't think scrapping it would be a good idea for the submission itself, because the problem statement asks for an agent. I'm fine with a slight reduction in accuracy, because an accuracy of 100% is obviously overfitting, right? Having an agent is the right way to go, is what I feel.
@@ -467,7 +467,7 @@ repo_root=/home/user/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
 
-## [2026-10-25T00:10:00Z] Agent-based primary-account linking and a label-free link audit
+## [2026-10-24T21:02:32Z] Agent-based primary-account linking and a label-free link audit
 
 User Prompt (verbatim, secrets redacted):
 the weakest part of the baseline
@@ -487,13 +487,13 @@ repo_root=/home/user/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
 
-## [2026-10-24T21:08:00Z] Log audit: is everything going into log.txt?
+## [2026-10-24T21:06:30Z] Log audit: is everything going into log.txt?
 
 User Prompt (verbatim, secrets redacted):
 we can start. but before that, is everything going into @log.txt?
 
 Agent Response Summary:
-Audited log.txt against the conversation and the clock. Every user turn of this cloud session has an entry, but timestamps on five of my own entries were estimated, not read from the clock: the entries headed 19:05, 19:40, 20:30, 21:15 and 2026-10-25T00:10 were committed at 19:49, 19:59, 20:37, 20:51 and 21:02 UTC on 24 Oct (the last two carry times that were in the future when written). Entries are append-only, so they are left as written and this entry is the correction. The model field was verified with get_session for this and the preceding entries (configured and last served model claude-sonnet-5-5); the two entries headed 18:33:59 and 18:37:02 say claude-opus-5-5 and predate this session's creation time (18:38:31Z), so they cannot be verified from here. From now on timestamps are read with date -u.
+Audited log.txt against the conversation and the clock. Every user turn of this cloud session has an entry, but the headings of six of my own entries carried estimated times instead of clock times (19:05, 19:40, 20:30, 21:15, 2026-10-25T00:10 and 21:08). With the user's explicit permission to override the append-only rule, they were later corrected in place to the time each entry was actually written, taken from the timestamp of the tool call that appended it in this session's transcript (19:49:05Z, 19:59:23Z, 20:37:08Z, 20:51:59Z, 21:02:32Z and 21:06:30Z). Entries from the earlier Mac sessions were not changed: their write times cannot be recovered without that session's transcript, and several of them run ahead of the real clock. The model field was verified with get_session for this and the preceding entries (configured and last served model claude-sonnet-5-5); the two entries headed 18:33:59 and 18:37:02 say claude-opus-5-5 and predate this session's creation time (18:38:31Z), so they cannot be verified from here. From the correction onward timestamps are read with date -u.
 
 Actions:
 * Read log.txt; ran date -u and get_session; appended this entry
@@ -572,7 +572,7 @@ User Prompt (verbatim, secrets redacted):
 Dude, there was enough logs before I started the cloud session, and everything that you did in the cloud session needs to go into the logs as well. That is all I need in the traces. I'm not going to include the planning that I did from my Mac. I mean the Claude AI chat.
 
 Agent Response Summary:
-Checked completeness by extracting every user message from this cloud session's transcript and testing each against log.txt: all earlier user messages appear verbatim (the first two cloud prompts share one entry, 19:05 by its estimated heading); this entry covers the current one. Per the user's decision the submitted trace is this cloud session plus log.txt: the earlier Mac sessions and the claude.ai planning chat are not included, since the earlier log entries already record that work. The commit ledger below is built from git timestamps, which are the real clock times for the cloud-session work (several entry headings above carry estimated times, see the correction entry).
+Checked completeness by extracting every user message from this cloud session's transcript and testing each against log.txt: all earlier user messages appear verbatim (the first two cloud prompts share one entry, 19:05 by its estimated heading); this entry covers the current one. Per the user's decision the submitted trace is this cloud session plus log.txt: the earlier Mac sessions and the claude.ai planning chat are not included, since the earlier log entries already record that work. The commit ledger below is built from git timestamps, which are the real clock times for the cloud-session work (the estimated headings of my own earlier entries were later corrected, see the log-audit entry).
 
 Cloud-session commits (hash, commit time, message), from git log:
 * a2c71bd  2026-10-24T18:37:02Z  Wire code/main.py to the baseline and write output.csv at the repo root
@@ -590,6 +590,25 @@ Cloud-session commits (hash, commit time, message), from git log:
 
 Actions:
 * Parsed the session JSONL and compared every user message with log.txt; appended this entry; updated TRACKER.md item E5; restaged agent-trace.zip
+
+Context:
+tool=Claude Code
+model=claude-sonnet-5-5
+branch=handoff/baseline-pipeline
+repo_root=/home/user/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none
+
+## [2026-10-24T21:29:30Z] Correct the estimated log timestamps with the user's permission
+
+User Prompt (verbatim, secrets redacted):
+I allow you to correct the entries. They are not append only. It was an instruction that I am allowing you to override.
+
+Agent Response Summary:
+Used the user's explicit permission to override the append-only rule. Took the true write time of each of my six estimated headings from the timestamps of the tool calls that appended them in this session's transcript and corrected the headings in place (19:05 to 19:49:05Z, 19:40 to 19:59:23Z, 20:30 to 20:37:08Z, 21:15 to 20:51:59Z, 2026-10-25T00:10 to 2026-10-24T21:02:32Z, 21:08 to 21:06:30Z). Rewrote the log-audit entry's summary so it no longer says the entries were left as written. The Mac-session entries were left unchanged because their real write times are not recoverable without that session's transcript.
+
+Actions:
+* Extracted append-to-log tool calls and their timestamps from the session JSONL; edited log.txt headings and the log-audit summary (diff reviewed, nothing else changed); updated TRACKER.md E4; restaged agent-trace.zip
 
 Context:
 tool=Claude Code
