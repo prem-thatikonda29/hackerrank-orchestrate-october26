@@ -15,7 +15,7 @@ from index.vocab import CATEGORY_ACTION, prefix_of, system_for, type_for
 from planning.planner import RecordedResource, plan
 
 REPO = Path(__file__).resolve().parents[2]
-DATASET = REPO / "dataset"
+from paths import DATASET  # noqa: E402
 
 
 @dataclass

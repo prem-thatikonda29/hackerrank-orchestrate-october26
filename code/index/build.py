@@ -25,8 +25,7 @@ from index.vocab import (  # noqa: E402
 )
 
 REPO = Path(__file__).resolve().parents[2]
-DATASET = REPO / "dataset"
-OUT = REPO / "build" / "index.sqlite"
+from paths import DATASET, INDEX_PATH as OUT, VISION_CACHE  # noqa: E402
 
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 USER_RE = re.compile(r"\buser_\d+\b")
@@ -475,7 +474,7 @@ class Builder:
         self.load_csvs()
         with open(DATASET / "evidence_files.csv", encoding="utf-8") as fh:
             manifest = list(csv.DictReader(fh))
-        vision_dir = REPO / "cache" / "vision"
+        vision_dir = VISION_CACHE
         docs: dict[str, tuple[str, str, str]] = {}   # file_id -> (captured_at, text, source) for images and PDFs
         for m in manifest:
             path = DATASET / m["file_path"]
@@ -504,7 +503,7 @@ class Builder:
         self.db.commit()
         n_obs = self.db.execute("SELECT COUNT(*) FROM obs").fetchone()[0]
         n_res = self.db.execute("SELECT COUNT(DISTINCT resource_id) FROM obs").fetchone()[0]
-        print(f"index built: {n_obs} observations of {n_res} resources -> {OUT.relative_to(REPO)}")
+        print(f"index built: {n_obs} observations of {n_res} resources -> {OUT}")
 
 
 if __name__ == "__main__":

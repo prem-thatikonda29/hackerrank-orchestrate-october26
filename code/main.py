@@ -59,7 +59,7 @@ def main() -> int:
         model = llm_config.settings()["agent_model"]
         results = run_cases(index, cases, model)
         rows = [(cid, r["status"], r["steps"]) for cid, r in results.items()]
-        if args.split == "eval":
+        if args.split == "eval" and not args.out:
             write_usage_report(REPO / "code" / "evaluation" / "usage_report.md", model, llm_config.settings()["vision_model"],
                                usage_totals(results), len(cases))
         fb = usage_totals(results)["fallbacks"]

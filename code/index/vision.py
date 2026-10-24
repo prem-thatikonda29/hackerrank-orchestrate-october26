@@ -22,8 +22,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 REPO = Path(__file__).resolve().parents[2]
-DATASET = REPO / "dataset"
-CACHE = REPO / "cache" / "vision"
+from paths import DATASET, VISION_CACHE as CACHE  # noqa: E402
 PROMPT_VERSION = "v2"
 
 PROMPT = """You transcribe a screenshot of an internal admin console into JSON. Transcribe literally, character by character.

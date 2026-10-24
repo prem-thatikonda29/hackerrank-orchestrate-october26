@@ -505,3 +505,23 @@ branch=handoff/baseline-pipeline
 repo_root=/home/user/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T21:11:29Z] Section D: custom cases, evaluation report, unit tests, usage report
+
+User Prompt (verbatim, secrets redacted):
+yes start with section D
+
+Agent Response Summary:
+Made dataset and index paths configurable (code/paths.py), then built seven fictional custom cases in the real file formats with hand-written gold (code/evaluation/custom_cases). The baseline passes 6 of 7 and the agent 7 of 7; the one baseline failure is a French request that refuses deletion, which the English-only regex misreads. Generated evaluation_report.md from the run files (accuracy tables, custom cases, link audit, 12 failures found and fixed, limitations), added 20 passing unit tests plus one documented xfail, and regenerated usage_report.md. Disclosed in the report that the pipeline does not interpret SYNC_RECORD events, that custom cases are author-written, and that sample accuracy is in-sample.
+
+Actions:
+* Added code/paths.py, code/evaluation/{run_custom,make_report}.py, code/evaluation/custom_cases/build_cases.py, code/tests/*; edited build.py, store.py, investigate.py, vision.py, main.py, TRACKER.md
+* Ran custom cases with both engines, pytest, make_report.py and main.py (output.csv unchanged)
+
+Context:
+tool=Claude Code
+model=claude-sonnet-5-5
+branch=handoff/baseline-pipeline
+repo_root=/home/user/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none

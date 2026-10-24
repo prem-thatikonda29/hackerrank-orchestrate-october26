@@ -1,0 +1,5 @@
+activity_id,event_time,event_type,source_system,target_system,resource_id,reported_result,details
+activity_9001,2026-10-02T01:10:00Z,DELETE_RECORD,deletion_worker,account_service,account_9101,SUCCESS,Deletion worker removed account_9101.
+activity_9002,2026-10-02T01:20:00Z,SYNC_RECORD,integration_service,account_service,account_9101,SUCCESS,Customer profile synchronization processed account_9101 from data_flow_9201.
+activity_9003,2026-10-02T02:30:00Z,DELETE_RECORD,deletion_worker,account_service,account_9102,SUCCESS,Deletion worker removed account_9102.
+activity_9004,2026-10-01T22:00:00Z,INDEX_RECORD,account_service,search_service,search_9999,SUCCESS,Customer search-index refresh processed search_9999.

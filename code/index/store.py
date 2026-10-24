@@ -8,7 +8,7 @@ from functools import cached_property
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
-INDEX_PATH = REPO / "build" / "index.sqlite"
+from paths import INDEX_PATH  # noqa: E402
 
 
 def ts(value: str) -> datetime:

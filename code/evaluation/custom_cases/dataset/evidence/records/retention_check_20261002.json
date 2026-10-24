@@ -1,0 +1,31 @@
+{
+ "exported_at": "2026-10-02T09:00:00Z",
+ "origin": "backup_service",
+ "record_count": 3,
+ "records": [
+  {
+   "recorded_at": "2026-10-02T09:00:00Z",
+   "system": "account_service",
+   "resource_id": "account_9106",
+   "record_type": "USER_PROFILE",
+   "result": "NOT_FOUND",
+   "subject_reference": "ines.carvalho@example.org"
+  },
+  {
+   "recorded_at": "2026-10-02T09:00:00Z",
+   "system": "security_service",
+   "resource_id": "audit_record_9506",
+   "record_type": "SECURITY_AUDIT_LOG",
+   "result": "FOUND",
+   "subject_reference": "user_906"
+  },
+  {
+   "recorded_at": "2026-10-02T09:00:00Z",
+   "system": "backup_service",
+   "resource_id": "backup_9606",
+   "record_type": "BACKUP_ARCHIVE",
+   "result": "ACTIVE",
+   "subject_reference": "ines.carvalho@example.org"
+  }
+ ]
+}

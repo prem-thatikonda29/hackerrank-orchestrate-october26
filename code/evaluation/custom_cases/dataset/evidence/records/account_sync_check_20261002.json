@@ -1,0 +1,23 @@
+{
+ "exported_at": "2026-10-02T10:00:00Z",
+ "origin": "account_service",
+ "record_count": 2,
+ "records": [
+  {
+   "recorded_at": "2026-10-02T10:00:00Z",
+   "system": "account_service",
+   "resource_id": "account_9101",
+   "record_type": "USER_PROFILE",
+   "result": "FOUND",
+   "subject_reference": "nadia.okafor@example.org"
+  },
+  {
+   "recorded_at": "2026-10-02T10:00:00Z",
+   "system": "integration_service",
+   "resource_id": "data_flow_9201",
+   "record_type": "DATA_FLOW",
+   "result": "ACTIVE",
+   "subject_reference": "nadia.okafor@example.org"
+  }
+ ]
+}

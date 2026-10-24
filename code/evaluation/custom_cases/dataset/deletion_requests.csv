@@ -1,0 +1,8 @@
+case_id,email,requested_at,reported_status,reported_at,audit_at,request_text
+custom_01,nadia.okafor@example.org,2026-10-01T08:00:00Z,COMPLETE,2026-10-02T02:00:00Z,2026-10-03T12:00:00Z,Please delete my account and every copy of my personal data. Confirm when the review is complete.
+custom_02,daniel.reyes@example.org,2026-10-01T08:00:00Z,COMPLETE,2026-10-02T03:00:00Z,2026-10-03T10:00:00Z,I want my account erased. Follow the retention rules for anything you must keep.
+custom_03,marta.lindqvist@example.org,2026-10-01T08:00:00Z,COMPLETE,2026-10-02T04:00:00Z,2026-10-03T12:00:00Z,Please permanently delete the account registered to this address.
+custom_04,hugo.marchand@example.org,2026-10-01T08:00:00Z,COMPLETE,2026-10-02T05:00:00Z,2026-10-03T12:00:00Z,"Bonjour, je souhaite uniquement corriger l'orthographe de mon nom sur mon compte. Merci de ne pas supprimer mon compte ni mes données."
+custom_05,camille.roux@example.org,2026-10-01T08:00:00Z,COMPLETE,2026-10-02T06:00:00Z,2026-10-03T12:00:00Z,Je vous prie de supprimer définitivement mon compte ainsi que toutes les données personnelles associées.
+custom_06,tomas.novak@example.org,2026-10-01T08:00:00Z,PARTIALLY_COMPLETE,2026-10-02T07:00:00Z,2026-10-03T12:00:00Z,Please erase the account that used this email address. Include records linked to earlier identifiers.
+custom_07,ines.carvalho@example.org,2026-10-01T08:00:00Z,NOT_STARTED,2026-10-02T08:00:00Z,2026-10-03T12:00:00Z,I would like my account and personal data deleted under the standard procedure.

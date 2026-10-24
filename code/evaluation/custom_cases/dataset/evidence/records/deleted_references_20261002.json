@@ -1,0 +1,14 @@
+{
+ "captured_at": "2026-10-02T09:30:00Z",
+ "source": "identity_reference_store",
+ "collection": "deleted_customer_references",
+ "records": [
+  {
+   "resource_id": "tombstone_9302",
+   "user_id": "user_902",
+   "email_hash": "9f2c1e7a9f2c1e7a9f2c1e7a9f2c1e7a9f2c1e7a9f2c1e7a9f2c1e7a9f2c1e7a",
+   "name": null,
+   "phone": null
+  }
+ ]
+}
