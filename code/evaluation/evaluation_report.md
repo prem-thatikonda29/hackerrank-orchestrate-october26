@@ -81,7 +81,7 @@ Where the rule yields exactly one candidate the independent linker agrees (about
 - No gold for the 518 evaluation cases; sample accuracy is in-sample for the rules.
 - About 105 primary-account links are tie-breaks (section 3). The ten screenshot-family cases assume each case contains only its linked resource, which is a hypothesis, not a verified gold fact.
 - The custom cases are author-written. They test behaviors, not independent ground truth.
-- `SYNC_RECORD` activity events are not interpreted: a recreated record is detected only if an evidence file shows it. A recreation visible only in the activity stream would be missed.
+- `SYNC_RECORD` activity events are not interpreted: a recreated record is detected only if an evidence file shows it. `python code/evaluation/sync_audit.py` measures the exposure on the supplied data: all 21 accounts with a successful sync after their delete are already present through evidence, sync events appear on 29 of 119 active data flows and on none of the 36 disabled ones, 361 of 447 sync events touch no case resource (decoys), and there are 0 contradictions with the evidence-derived states. The gap is therefore latent here, not costly, but a recreation visible only in the activity stream would be missed.
 
 ## 6. How to reproduce
 

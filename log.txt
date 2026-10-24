@@ -525,3 +525,22 @@ branch=handoff/baseline-pipeline
 repo_root=/home/user/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T21:15:35Z] Check the SYNC_RECORD gap
+
+User Prompt (verbatim, secrets redacted):
+check the sync record gao
+
+Agent Response Summary:
+Measured whether SYNC_RECORD events carry signal the pipeline ignores. In the 32 gold samples only three resources have a sync and all three are findings (recreated accounts); on all 550 cases every account with a successful sync after its delete is already present through evidence, data-flow syncs occur on active flows only, and 361 of 447 sync events touch no case resource. There are no contradictions with the evidence-derived state, so no behavior rule was added; the check is kept as a reproducible audit and the evaluation report now states the measured exposure.
+
+Actions:
+* Queried system_activity and the investigator output; added code/evaluation/sync_audit.py; edited make_report.py and regenerated evaluation_report.md
+
+Context:
+tool=Claude Code
+model=claude-sonnet-5-5
+branch=handoff/baseline-pipeline
+repo_root=/home/user/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none
