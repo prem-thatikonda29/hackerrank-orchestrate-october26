@@ -5,6 +5,16 @@ Read this first, then `TRACKER.md` (task list), then `code/docs/architecture.md`
 
 Read `AGENTS.md` too. It requires appending a `log.txt` entry for every user turn, with the exact `tool=` and `model=` of the session writing it. Keep doing that in the new session; `log.txt` is the `chat_transcript` deliverable.
 
+## 0. UPDATE 24 Oct 2026, ~19:00 UTC (cloud session) — read this first
+
+- Environment is ready: `OPENAI_API_KEY` is set and `api.openai.com` is on the allowed-domains list. Both only apply to sessions started after the change; a session that began before may still see 403s. Verify with `.venv/bin/python code/scripts/check_llm.py`.
+- **A8 is done.** Tool calling PASSES on `gpt-6-luna`, and `vision.py --only account_admin` extracts a screenshot (about 2.8K in / 0.9K out tokens each, so all 11 cost well under $0.01). Other models listed by the account: `gpt-5.6-luna`, `gpt-6-astra`, `gpt-6-sol`, `gpt-6.1-sol`.
+- **Fixed:** `gpt-6-luna` rejects `temperature=0` (400 `unsupported_value`). Removed the temperature default from `code/llm_config.py`. Do not pass `temperature` for this model family.
+- Recreate the venv in a new container: `python3 -m venv .venv && .venv/bin/pip install -r code/requirements.txt` (`.venv`, `cache/`, `build/`, `runs/` are gitignored, so `cache/vision/` is empty again: re-run `code/index/vision.py`).
+- `code/main.py` is no longer empty: it builds the index, runs the baseline for every case and writes a validated `output.csv` (518 rows). The 10 screenshot cases (case_33, 34, 35, 39, 50, 52, 53, 55, 61, 63) still output COMPLETE with empty steps, which is wrong. That is the main remaining accuracy gap.
+- Next, in order: B1 (run vision on all 11 PNGs, check against section 6) -> B2 to B5 (link events, screenshot observations, temporal state) -> B6 rescore (must stay at 0.875 exact rows or better) -> C (agent) -> D (reports) -> E (final run, README, zips). Budget about $3.60; use `BUDGET_USD`.
+- Process rules from `AGENTS.md` still apply: append a `SESSION START` entry and one entry per user turn to `log.txt`, with exact `tool=` and `model=`.
+
 ## 1. The task in one paragraph
 
 For each of 518 rows in `dataset/deletion_requests.csv`, decide whether deletion was really requested (else `NOT_APPLICABLE`, `[]`), resolve current and historical identifiers, reconstruct every resource's state at `audit_at` from the evidence, and write `output.csv` (`case_id,deletion_status,steps_json`) with findings, remediation and verification steps in the contract order. Full contract: `problem_statement.md` and `AGENTS.md` section 6.

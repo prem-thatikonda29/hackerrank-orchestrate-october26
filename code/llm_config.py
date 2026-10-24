@@ -47,6 +47,5 @@ def chat_model(model: str | None = None, **kwargs):
     cfg = settings()
     if not cfg["api_key"]:
         raise RuntimeError("No API key: set OPENAI_API_KEY (or LLM_API_KEY) in the environment or the repo-root .env")
-    kwargs.setdefault("temperature", 0)
     kwargs.setdefault("timeout", 120)
     return ChatOpenAI(base_url=cfg["base_url"], api_key=cfg["api_key"], model=model or cfg["agent_model"], **kwargs)

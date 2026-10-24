@@ -14,7 +14,7 @@ How to use: tick a box (`[x]`) when a task is done and add a one-line note. Keep
 - [x] A5 Rule-based baseline (`code/runner/baseline.py`). Result on 32 samples: status 1.000, step F1 0.987, exact rows 0.875. Verify: `python code/runner/baseline.py --split sample && python code/evaluation/scorer.py runs/baseline_sample.csv`.
 - [x] A6 Baseline file for all 518 cases validates (`runs/baseline_eval.csv`: 345 INCOMPLETE, 163 COMPLETE, 10 NOT_APPLICABLE).
 - [x] A7 Provider config (`code/llm_config.py`, OpenAI by default) and endpoint smoke test (`code/scripts/check_llm.py`). The local FreeLLMAPI router worked on the author's Mac but is not available in the cloud session.
-- [ ] A8 In the new session: add `OPENAI_API_KEY`, run `python code/scripts/check_llm.py` (expect PASS) and check that `gpt-6-luna` accepts images (`python code/index/vision.py --only account_admin`). If it does not, set `AGENT_MODEL` / `VISION_MODEL` to a model that does.
+- [x] A8 (done 24 Oct: tool calling PASS, vision works on gpt-6-luna, temperature default removed) In the new session: add `OPENAI_API_KEY`, run `python code/scripts/check_llm.py` (expect PASS) and check that `gpt-6-luna` accepts images (`python code/index/vision.py --only account_admin`). If it does not, set `AGENT_MODEL` / `VISION_MODEL` to a model that does.
 
 ## B. Screenshots, PDFs and the early-audit family (next)
 
