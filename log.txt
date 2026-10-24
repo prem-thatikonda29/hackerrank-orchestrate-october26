@@ -425,3 +425,23 @@ branch=handoff/baseline-pipeline
 repo_root=/home/user/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T20:30:00Z] Overfitting check and basic LLM agent vs baseline
+
+User Prompt (verbatim, secrets redacted):
+Let's build a basic one and see how it works compared to the baseline that we have right now. If it's actually hurting determinism, let's scrape it. But one thing I don't understand, how are we hitting 100% accuracy? This is probably overfitting, don't you think?
+
+Agent Response Summary:
+Agreed the 1.000 is status accuracy on the same 32 samples the heuristics were tuned on, and measured how much of the 518-case run depends on those heuristics. Built a basic LangChain agent (code/agent) that decides intent and per-resource state from raw observations while the deterministic planner builds steps, ran it on the samples and all 518 eval cases, and measured agreement and run-to-run repeatability.
+
+Actions:
+* Wrote code/agent/agent.py and code/agent/run.py; ran samples, eval (518) and a 60-case rerun with a separate cache
+* Compared runs/agent_eval.csv, agent_eval_rerun.csv and baseline_eval.csv
+
+Context:
+tool=Claude Code
+model=claude-sonnet-5-5
+branch=handoff/baseline-pipeline
+repo_root=/home/user/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none

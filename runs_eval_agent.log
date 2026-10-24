@@ -1,0 +1,12 @@
+cases=518 tokens in=1950099 out=265816 calls=1000 problems=16
+  case_58 ['step 1: VERIFY_RECORD_ABSENT needs an evidence_id']
+  case_60 ['step 1: VERIFY_RECORD_ABSENT needs an evidence_id']
+  case_64 ['step 1: VERIFY_RECORD_ABSENT needs an evidence_id']
+  case_69 ['step 1: VERIFY_RECORD_ABSENT needs an evidence_id']
+  case_70 ['step 1: VERIFY_RECORD_ABSENT needs an evidence_id']
+  case_111 ['step 1: VERIFY_RECORD_ABSENT needs an evidence_id']
+  case_126 ['step 1: VERIFY_RECORD_ABSENT needs an evidence_id']
+  case_213 ['step 1: VERIFY_RECORD_ABSENT needs an evidence_id']
+  case_215 ['step 1: VERIFY_RECORD_ABSENT needs an evidence_id']
+  case_218 ['step 1: VERIFY_RECORD_ABSENT needs an evidence_id']
+wrote runs/agent_eval.csv
