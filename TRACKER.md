@@ -41,6 +41,12 @@ How to use: tick a box (`[x]`) when a task is done and add a one-line note. Keep
 - Result: agent engine output equals the baseline on all 518 rows and 32 samples (0.875 exact rows). The agent changes about 430 state labels but the planner maps them to the same steps; it only has leverage where a label crosses a violation boundary, an intent decision, or an omission. Repeatability: 0 differing rows between two independent runs of 100 cases (the first design without the merge guards flipped 4 of 60).
 - Still open: C4 tracing (per-case JSONL), C3 middleware beyond the merge guard, D1 to D4 reports, E packaging. Overfitting: no held-out gold exists, so build the custom cases (D2) from patterns NOT used to tune the heuristics.
 
+### Link audit (agent vs rules for activity-only primary accounts), for the evaluation report
+
+- Rules link 30/32 sample accounts (tuned on them). Zero-shot agent linker (`code/agent/link_agent.py`, prompt l1) linked 26/32; after revising the prompt on its sample failures (l2, contaminated) 28/32.
+- Label-free audit (`python code/evaluation/link_audit.py --agent`): of 272 eval cases needing a linked account, 157 (58%) have exactly one candidate under the tight rule and the agent agrees with the rules on 147 of them (94%). 105 (39%) have several candidates; there the two agree on only 14 (13%). 10 have none (the screenshot family).
+- Conclusion: the rule is well supported where it is decisive; the 105 ambiguous cases are a real uncertainty that neither method can resolve from the data (activity IDs do not follow case order and gaps to a case's other events are not constant). Rules stay the default (`--link-engine rules`); the agent linker is opt-in. An error here costs one wrong account step per case, not the case status.
+
 ## D. Evaluation and reports
 
 - [ ] D1 `code/evaluation/evaluation_report.md`: case, step, field and sequence accuracy; baseline vs agent; failures found and fixes.

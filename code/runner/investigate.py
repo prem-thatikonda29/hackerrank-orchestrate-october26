@@ -116,6 +116,15 @@ def _recorded(candidates: list[Candidate]) -> list[RecordedResource]:
             for c in candidates]
 
 
+ACCOUNT_CHOOSER = None   # set to a callable (see linking.build_links) to let the agent link primary accounts
+
+
+def set_account_chooser(chooser) -> None:
+    global ACCOUNT_CHOOSER
+    ACCOUNT_CHOOSER = chooser
+    _dossiers.cache_clear()
+
+
 @lru_cache(maxsize=2)
 def _dossiers(index: Index) -> dict[str, Dossier]:
     from runner.linking import build_links  # local import: linking imports planner types
@@ -124,7 +133,7 @@ def _dossiers(index: Index) -> dict[str, Dossier]:
     base = {c.case_id: evidence_dossier(index, c) for c in cases}
     complete_like = {cid: plan(_recorded(d.candidates))[0] == "COMPLETE" for cid, d in base.items()}
     evidence_resources = {cid: {c.resource_id for c in d.candidates} for cid, d in base.items()}
-    links = build_links(index, cases, base, complete_like, evidence_resources)
+    links = build_links(index, cases, base, complete_like, evidence_resources, ACCOUNT_CHOOSER)
 
     final: dict[str, Dossier] = {}
     for cid, d in base.items():

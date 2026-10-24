@@ -38,6 +38,8 @@ def main() -> int:
     ap.add_argument("--split", choices=["sample", "eval"], default="eval")
     ap.add_argument("--out", help="default: output.csv at the repo root (eval) or runs/main_sample.csv (sample)")
     ap.add_argument("--engine", choices=["agent", "baseline"], default="agent")
+    ap.add_argument("--link-engine", choices=["rules", "agent"], default="rules",
+                    help="how activity-only primary accounts are linked; the agent linker is opt-in (see TRACKER.md, link audit)")
     ap.add_argument("--skip-index", action="store_true", help="reuse an existing build/index.sqlite")
     args = ap.parse_args()
 
@@ -45,6 +47,11 @@ def main() -> int:
         ensure_screenshots()
         Builder().run()
     index = Index()
+    if args.link_engine == "agent":
+        from agent.link_agent import make_account_chooser
+        from runner.investigate import set_account_chooser
+
+        set_account_chooser(make_account_chooser())
     cases = load_cases("sample_deletion_requests.csv" if args.split == "sample" else "deletion_requests.csv")
     if args.engine == "agent":
         import llm_config

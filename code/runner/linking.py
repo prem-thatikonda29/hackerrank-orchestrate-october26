@@ -62,8 +62,11 @@ def _greedy(needs: list, candidates: dict, score) -> dict:
     return out
 
 
+WIDE_ACCOUNT_WINDOW_MIN = 240.0   # candidate window offered to an external chooser (the agent), not the tuned window
+
+
 def build_links(index: Index, cases: list, base: dict, complete_like: dict[str, bool],
-                evidence_resources: dict[str, set[str]]) -> Links:
+                evidence_resources: dict[str, set[str]], account_chooser=None) -> Links:
     """base: case_id -> Dossier from evidence only. evidence_resources: case_id -> resource ids tied to it by evidence."""
     rows = [dict(r) for r in index.db.execute("SELECT * FROM activity WHERE source_system='deletion_worker'")]
     by_type = defaultdict(list)
@@ -88,6 +91,13 @@ def build_links(index: Index, cases: list, base: dict, complete_like: dict[str, 
     for cid in need:
         c = live[cid]
         want = RESULT_FOR_STATUS.get(c.reported_status)
+        if account_chooser:
+            account_candidates[cid] = [
+                e for e in account_events
+                if e["event_time"] >= c.requested_at and e["resource_id"] not in claimed
+                and not foreign_owned(e["resource_id"], base[cid].user_id)
+                and abs(_offset(e, c)) <= WIDE_ACCOUNT_WINDOW_MIN]
+            continue
         account_candidates[cid] = [
             e for e in account_events
             if e["event_time"] >= c.requested_at and e["resource_id"] not in claimed
@@ -103,7 +113,17 @@ def build_links(index: Index, cases: list, base: dict, complete_like: dict[str, 
         batch = _in_windows(_offset(e, live[cid]), [BATCH_ACCOUNT_WINDOW]) and e["reported_result"] == RESULT_FOR_STATUS.get(live[cid].reported_status)
         return (0 if batch else 1, (0 if w else 1) if complete_like[cid] else (1 if w else 0), abs(_offset(e, live[cid])) if not batch else 0, e["event_time"])
 
-    account = {cid: (e["resource_id"], e["activity_id"]) for cid, e in _greedy(need, account_candidates, account_score).items()}
+    if account_chooser:
+        info = {cid: {"case": live[cid], "complete_like": complete_like[cid],
+                      "witnessed": {e["activity_id"]: witnessed(e["resource_id"], live[cid].audit_at) for e in account_candidates[cid]},
+                      "offset": {e["activity_id"]: _offset(e, live[cid]) for e in account_candidates[cid]}} for cid in need}
+        ranking = account_chooser(need, account_candidates, info)    # cid -> [activity_id, ...] best first
+        rank = {cid: {a: i for i, a in enumerate(order)} for cid, order in ranking.items()}
+        pickable = {cid: [e for e in account_candidates[cid] if e["activity_id"] in rank.get(cid, {})] for cid in need}
+        chosen = _greedy(need, pickable, lambda cid, e: (rank[cid][e["activity_id"]], e["event_time"]))
+        account = {cid: (e["resource_id"], e["activity_id"]) for cid, e in chosen.items()}
+    else:
+        account = {cid: (e["resource_id"], e["activity_id"]) for cid, e in _greedy(need, account_candidates, account_score).items()}
 
     # ---- identifier-free anonymized analytics ----
     anon_events = [e for e in by_type["ANONYMIZE_RECORD"] if e["reported_result"] == "SUCCESS"]

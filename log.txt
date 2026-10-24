@@ -466,3 +466,23 @@ branch=handoff/baseline-pipeline
 repo_root=/home/user/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-25T00:10:00Z] Agent-based primary-account linking and a label-free link audit
+
+User Prompt (verbatim, secrets redacted):
+the weakest part of the baseline
+
+Agent Response Summary:
+Built an LLM linker for activity-only primary accounts (code/agent/link_agent.py) using generic priors, refactored the baseline linker to accept a chooser, and measured it. Zero-shot it links 26/32 sample accounts against the rules' 30/32; a label-free audit shows 94% agreement with the rules where the rule is decisive and 13% where several candidates exist, so those 105 cases are a data limit. Kept rules as the default linker, made the agent linker opt-in, and recorded the audit in TRACKER.md and code/evaluation/link_audit.py.
+
+Actions:
+* Edited code/runner/linking.py, code/runner/investigate.py, code/main.py, TRACKER.md; added code/agent/link_agent.py, code/evaluation/link_audit.py
+* Ran the linker over all 550 cases and the audit; output.csv unchanged
+
+Context:
+tool=Claude Code
+model=claude-sonnet-5-5
+branch=handoff/baseline-pipeline
+repo_root=/home/user/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none
