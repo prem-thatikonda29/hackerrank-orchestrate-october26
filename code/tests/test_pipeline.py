@@ -11,7 +11,7 @@ from runner.intent import baseline_intent
 from runner.investigate import investigate, load_cases
 
 GOLD = {r["case_id"]: (r["deletion_status"], json.loads(r["steps_json"]))
-        for r in csv.DictReader(open(Path(__file__).resolve().parents[1] / "evaluation" / "custom_cases" / "dataset" / "expected_output.csv"))}
+        for r in csv.DictReader(open(Path(__file__).resolve().parents[1] / "evaluation" / "custom_cases" / "fixtures" / "expected_output.csv"))}
 CASES = {c.case_id: c for c in load_cases("deletion_requests.csv")}
 INDEX = Index()
 

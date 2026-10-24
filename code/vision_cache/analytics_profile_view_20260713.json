@@ -1,0 +1,162 @@
+{
+ "file_id": "evidence_19",
+ "sha256": "4e4cb259bc2010b622b0c53fe5872258f994fefc23452a83bb27473758693484",
+ "model": "gpt-6-luna",
+ "prompt_version": "v2",
+ "usage": {
+  "input_tokens": 2682,
+  "output_tokens": 772,
+  "total_tokens": 3454,
+  "input_token_details": {
+   "audio": 0,
+   "cache_read": 1792
+  },
+  "output_token_details": {
+   "audio": 0,
+   "reasoning": 356
+  }
+ },
+ "raw": {
+  "console": "Northstar Shop",
+  "page_title": "Omar Darwish",
+  "subtitle": "user_20 · analytics_7438 · darwish.omar@icloud.com",
+  "header_fields": {
+   "Sessions": "12",
+   "Products viewed": "19",
+   "Completed orders": "2",
+   "Revenue": "USD 167.42",
+   "Mobile / Desktop": "67% / 33%",
+   "Acquisition": "Organic search"
+  },
+  "table_columns": [
+   "Time",
+   "Event",
+   "Product / detail",
+   "Value",
+   "Device"
+  ],
+  "table_rows": [
+   [
+    "1 14:22",
+    "Order completed",
+    "Ceramic coffee set",
+    "USD 84.21",
+    "Mobile"
+   ],
+   [
+    "2 14:20",
+    "Checkout started",
+    "2 items",
+    "USD 84.21",
+    "Mobile"
+   ],
+   [
+    "3 14:17",
+    "Product viewed",
+    "Ceramic coffee set",
+    "—",
+    "Mobile"
+   ],
+   [
+    "4 14:16",
+    "Added to cart",
+    "Ceramic coffee set",
+    "USD 42.00",
+    "Mobile"
+   ],
+   [
+    "5 14:12",
+    "Product viewed",
+    "Stoneware mug",
+    "USD 18.00",
+    "Desktop"
+   ]
+  ],
+  "detail_title": "Profile attributes",
+  "detail_fields": {
+   "Market": "AE",
+   "Audience": "Returning shopper",
+   "Interest": "Coffee & dining",
+   "Last activity": "13 Jul 2026 14:22 UTC",
+   "First seen": "21 Apr 2026 09:14 UTC"
+  },
+  "activity": [
+   "13 Jul — 6 events in active session",
+   "08 Jul — Order completed · USD 83.21",
+   "30 Jun — Product search · coffee set",
+   "22 Jun — Campaign opened"
+  ]
+ },
+ "extraction": {
+  "console": "Northstar Shop",
+  "page_title": "Omar Darwish",
+  "subtitle": "user_20 · analytics_7438 · darwish.omar@icloud.com",
+  "header_fields": {
+   "Sessions": "12",
+   "Products viewed": "19",
+   "Completed orders": "2",
+   "Revenue": "USD 167.42",
+   "Mobile / Desktop": "67% / 33%",
+   "Acquisition": "Organic search"
+  },
+  "table_columns": [
+   "Time",
+   "Event",
+   "Product / detail",
+   "Value",
+   "Device"
+  ],
+  "table_rows": [
+   [
+    "1 14:22",
+    "Order completed",
+    "Ceramic coffee set",
+    "USD 84.21",
+    "Mobile"
+   ],
+   [
+    "2 14:20",
+    "Checkout started",
+    "2 items",
+    "USD 84.21",
+    "Mobile"
+   ],
+   [
+    "3 14:17",
+    "Product viewed",
+    "Ceramic coffee set",
+    "—",
+    "Mobile"
+   ],
+   [
+    "4 14:16",
+    "Added to cart",
+    "Ceramic coffee set",
+    "USD 42.00",
+    "Mobile"
+   ],
+   [
+    "5 14:12",
+    "Product viewed",
+    "Stoneware mug",
+    "USD 18.00",
+    "Desktop"
+   ]
+  ],
+  "detail_title": "Profile attributes",
+  "detail_fields": {
+   "Market": "AE",
+   "Audience": "Returning shopper",
+   "Interest": "Coffee & dining",
+   "Last activity": "13 Jul 2026 14:22 UTC",
+   "First seen": "21 Apr 2026 09:14 UTC"
+  },
+  "activity": [
+   "13 Jul — 6 events in active session",
+   "08 Jul — Order completed · USD 83.21",
+   "30 Jun — Product search · coffee set",
+   "22 Jun — Campaign opened"
+  ]
+ },
+ "text": "Northstar Shop\nOmar Darwish\nuser_20 · analytics_7438 · darwish.omar@icloud.com\nSessions: 12\nProducts viewed: 19\nCompleted orders: 2\nRevenue: USD 167.42\nMobile / Desktop: 67% / 33%\nAcquisition: Organic search\nTime | Event | Product / detail | Value | Device\n1 14:22 | Order completed | Ceramic coffee set | USD 84.21 | Mobile\n2 14:20 | Checkout started | 2 items | USD 84.21 | Mobile\n3 14:17 | Product viewed | Ceramic coffee set | — | Mobile\n4 14:16 | Added to cart | Ceramic coffee set | USD 42.00 | Mobile\n5 14:12 | Product viewed | Stoneware mug | USD 18.00 | Desktop\nProfile attributes\nMarket: AE\nAudience: Returning shopper\nInterest: Coffee & dining\nLast activity: 13 Jul 2026 14:22 UTC\nFirst seen: 21 Apr 2026 09:14 UTC\n13 Jul — 6 events in active session\n08 Jul — Order completed · USD 83.21\n30 Jun — Product search · coffee set\n22 Jun — Campaign opened"
+}

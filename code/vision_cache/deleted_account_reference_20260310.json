@@ -1,0 +1,144 @@
+{
+ "file_id": "evidence_42",
+ "sha256": "68c28a72afd6ed184d5990d15c543f8a516face204f0360f732755a8a63c28be",
+ "model": "gpt-6-luna",
+ "prompt_version": "v2",
+ "usage": {
+  "input_tokens": 2614,
+  "output_tokens": 1289,
+  "total_tokens": 3903,
+  "input_token_details": {
+   "audio": 0,
+   "cache_read": 1792
+  },
+  "output_token_details": {
+   "audio": 0,
+   "reasoning": 860
+  }
+ },
+ "raw": {
+  "console": "Northstar Shop",
+  "page_title": "user_17",
+  "subtitle": "Customer key · Account Platform · eu-west",
+  "header_fields": {
+   "Reference type": "Customer key",
+   "Created": "11 Jan 2024 08:42 UTC",
+   "Most recent update": "10 Mar 2026 07:18 UTC",
+   "Owner team": "Account Platform"
+  },
+  "table_columns": [
+   "System",
+   "Record reference",
+   "Relationship",
+   "Created (UTC)",
+   "Status"
+  ],
+  "table_rows": [
+   [
+    "1 Orders",
+    "ORD-20263245",
+    "Linked to customer",
+    "11 Jan 2024 08:45",
+    "Active"
+   ],
+   [
+    "2 Support",
+    "CS-3245",
+    "Linked to customer",
+    "14 Feb 2024 12:16",
+    "Active"
+   ],
+   [
+    "3 Support",
+    "CS-3378",
+    "Linked to customer",
+    "03 Jun 2024 09:27",
+    "Active"
+   ],
+   [
+    "4 Finance",
+    "FIN-7742",
+    "Linked to customer",
+    "22 Aug 2024 15:03",
+    "Active"
+   ]
+  ],
+  "detail_title": "History",
+  "detail_fields": {},
+  "activity": [
+   "10 Mar 2026 Metadata reviewed",
+   "22 Aug 2024 Finance link added",
+   "03 Jun 2024 Support link added",
+   "14 Feb 2024 Support link added",
+   "11 Jan 2024 Reference created",
+   "Reference created\nRecorded",
+   "Order link added\nORD-20263245",
+   "Support links added\nCS-3245, CS-3378",
+   "Finance link added\nFIN-7742",
+   "Metadata reviewed\nRecorded"
+  ]
+ },
+ "extraction": {
+  "console": "Northstar Shop",
+  "page_title": "user_17",
+  "subtitle": "Customer key · Account Platform · eu-west",
+  "header_fields": {
+   "Reference type": "Customer key",
+   "Created": "11 Jan 2024 08:42 UTC",
+   "Most recent update": "10 Mar 2026 07:18 UTC",
+   "Owner team": "Account Platform"
+  },
+  "table_columns": [
+   "System",
+   "Record reference",
+   "Relationship",
+   "Created (UTC)",
+   "Status"
+  ],
+  "table_rows": [
+   [
+    "1 Orders",
+    "ORD-20263245",
+    "Linked to customer",
+    "11 Jan 2024 08:45",
+    "Active"
+   ],
+   [
+    "2 Support",
+    "CS-3245",
+    "Linked to customer",
+    "14 Feb 2024 12:16",
+    "Active"
+   ],
+   [
+    "3 Support",
+    "CS-3378",
+    "Linked to customer",
+    "03 Jun 2024 09:27",
+    "Active"
+   ],
+   [
+    "4 Finance",
+    "FIN-7742",
+    "Linked to customer",
+    "22 Aug 2024 15:03",
+    "Active"
+   ]
+  ],
+  "detail_title": "History",
+  "detail_fields": {},
+  "activity": [
+   "10 Mar 2026 Metadata reviewed",
+   "22 Aug 2024 Finance link added",
+   "03 Jun 2024 Support link added",
+   "14 Feb 2024 Support link added",
+   "11 Jan 2024 Reference created",
+   "Reference created\nRecorded",
+   "Order link added\nORD-20263245",
+   "Support links added\nCS-3245, CS-3378",
+   "Finance link added\nFIN-7742",
+   "Metadata reviewed\nRecorded"
+  ]
+ },
+ "text": "Northstar Shop\nuser_17\nCustomer key · Account Platform · eu-west\nReference type: Customer key\nCreated: 11 Jan 2024 08:42 UTC\nMost recent update: 10 Mar 2026 07:18 UTC\nOwner team: Account Platform\nSystem | Record reference | Relationship | Created (UTC) | Status\n1 Orders | ORD-20263245 | Linked to customer | 11 Jan 2024 08:45 | Active\n2 Support | CS-3245 | Linked to customer | 14 Feb 2024 12:16 | Active\n3 Support | CS-3378 | Linked to customer | 03 Jun 2024 09:27 | Active\n4 Finance | FIN-7742 | Linked to customer | 22 Aug 2024 15:03 | Active\nHistory\n10 Mar 2026 Metadata reviewed\n22 Aug 2024 Finance link added\n03 Jun 2024 Support link added\n14 Feb 2024 Support link added\n11 Jan 2024 Reference created\nReference created\nRecorded\nOrder link added\nORD-20263245\nSupport links added\nCS-3245, CS-3378\nFinance link added\nFIN-7742\nMetadata reviewed\nRecorded"
+}

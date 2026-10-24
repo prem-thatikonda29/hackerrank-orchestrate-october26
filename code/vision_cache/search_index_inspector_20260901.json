@@ -1,0 +1,124 @@
+{
+ "file_id": "evidence_09",
+ "sha256": "75afdb0ae53a4510c83399a70d88073cb4fb2747454095756e4ddad1a8c70605",
+ "model": "gpt-6-luna",
+ "prompt_version": "v2",
+ "usage": {
+  "input_tokens": 2614,
+  "output_tokens": 895,
+  "total_tokens": 3509,
+  "input_token_details": {
+   "audio": 0,
+   "cache_read": 1792
+  },
+  "output_token_details": {
+   "audio": 0,
+   "reasoning": 495
+  }
+ },
+ "raw": {
+  "console": "Northstar Shop",
+  "page_title": "Customer Search",
+  "subtitle": "customer_directory_v3 / prod-eu",
+  "header_fields": {
+   "Executed": "01 Sep 2026 06:00:14 UTC",
+   "Latency": "184 ms",
+   "Index": "customer_directory_v3",
+   "Environment": "prod-eu",
+   "Shard total": "184 ms"
+  },
+  "table_columns": [
+   "_id",
+   "Display name",
+   "Email",
+   "Customer reference",
+   "Score",
+   "Last indexed"
+  ],
+  "table_rows": [
+   [
+    "1 search_428",
+    "Gabriel Silva",
+    "g.silva76@gmail.com",
+    "user_13",
+    "9.84",
+    "05:58:21 UTC"
+   ],
+   [
+    "2 search_1874",
+    "—",
+    "g.silva76.jr@gmail.com",
+    "—",
+    "4.12",
+    "05:55:03 UTC"
+   ]
+  ],
+  "detail_title": "Raw document · search_428",
+  "detail_fields": {
+   "_index": "customer_directory_v3",
+   "_id": "search_428",
+   "display_name": "Gabriel Silva",
+   "email": "g.silva76@gmail.com",
+   "customer_reference": "user_13",
+   "indexed_at": "2026-09-01T05:58:21Z"
+  },
+  "activity": [
+   "06:00:14 email:g.silva76@gmail.com · 2 hits",
+   "05:42:03 customer_reference:user_9842 · 1 hit",
+   "05:31:18 display_name:\"Aditi Jain\" · 1 hit"
+  ]
+ },
+ "extraction": {
+  "console": "Northstar Shop",
+  "page_title": "Customer Search",
+  "subtitle": "customer_directory_v3 / prod-eu",
+  "header_fields": {
+   "Executed": "01 Sep 2026 06:00:14 UTC",
+   "Latency": "184 ms",
+   "Index": "customer_directory_v3",
+   "Environment": "prod-eu",
+   "Shard total": "184 ms"
+  },
+  "table_columns": [
+   "_id",
+   "Display name",
+   "Email",
+   "Customer reference",
+   "Score",
+   "Last indexed"
+  ],
+  "table_rows": [
+   [
+    "1 search_428",
+    "Gabriel Silva",
+    "g.silva76@gmail.com",
+    "user_13",
+    "9.84",
+    "05:58:21 UTC"
+   ],
+   [
+    "2 search_1874",
+    "—",
+    "g.silva76.jr@gmail.com",
+    "—",
+    "4.12",
+    "05:55:03 UTC"
+   ]
+  ],
+  "detail_title": "Raw document · search_428",
+  "detail_fields": {
+   "_index": "customer_directory_v3",
+   "_id": "search_428",
+   "display_name": "Gabriel Silva",
+   "email": "g.silva76@gmail.com",
+   "customer_reference": "user_13",
+   "indexed_at": "2026-09-01T05:58:21Z"
+  },
+  "activity": [
+   "06:00:14 email:g.silva76@gmail.com · 2 hits",
+   "05:42:03 customer_reference:user_9842 · 1 hit",
+   "05:31:18 display_name:\"Aditi Jain\" · 1 hit"
+  ]
+ },
+ "text": "Northstar Shop\nCustomer Search\ncustomer_directory_v3 / prod-eu\nExecuted: 01 Sep 2026 06:00:14 UTC\nLatency: 184 ms\nIndex: customer_directory_v3\nEnvironment: prod-eu\nShard total: 184 ms\n_id | Display name | Email | Customer reference | Score | Last indexed\n1 search_428 | Gabriel Silva | g.silva76@gmail.com | user_13 | 9.84 | 05:58:21 UTC\n2 search_1874 | — | g.silva76.jr@gmail.com | — | 4.12 | 05:55:03 UTC\nRaw document · search_428\n_index: customer_directory_v3\n_id: search_428\ndisplay_name: Gabriel Silva\nemail: g.silva76@gmail.com\ncustomer_reference: user_13\nindexed_at: 2026-09-01T05:58:21Z\n06:00:14 email:g.silva76@gmail.com · 2 hits\n05:42:03 customer_reference:user_9842 · 1 hit\n05:31:18 display_name:\"Aditi Jain\" · 1 hit"
+}

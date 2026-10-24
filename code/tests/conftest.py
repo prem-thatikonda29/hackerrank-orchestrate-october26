@@ -11,7 +11,7 @@ CASES = CODE / "evaluation" / "custom_cases"
 _TMP = Path(tempfile.mkdtemp(prefix="ghost_tests_"))
 
 subprocess.run([sys.executable, str(CASES / "build_cases.py")], check=True, capture_output=True)
-os.environ["DATASET_DIR"] = str(CASES / "dataset")
+os.environ["DATASET_DIR"] = str(CASES / "fixtures")
 os.environ["INDEX_PATH"] = str(_TMP / "index.sqlite")
 os.environ["VISION_CACHE_DIR"] = str(_TMP / "vision")
 sys.path.insert(0, str(CODE))

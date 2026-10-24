@@ -1,15 +1,18 @@
 """Write evaluation/usage_report.md for the final full run from recorded token counts. Prices in USD per 1M tokens."""
 
 import json
+import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from paths import VISION_CACHE  # noqa: E402
 PRICES = {"gpt-6-luna": {"input": 0.10, "output": 0.50}}   # developers.openai.com/api/docs/pricing, 24 Oct 2026; cached input ignored (upper bound)
 
 
 def vision_usage(model: str) -> dict:
     total = {"calls": 0, "input_tokens": 0, "output_tokens": 0}
-    for f in sorted((REPO / "cache" / "vision").glob("*.json")):
+    for f in sorted(VISION_CACHE.glob("*.json")):
         d = json.loads(f.read_text())
         if d.get("model") == model:
             total["calls"] += 1

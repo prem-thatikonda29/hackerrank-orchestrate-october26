@@ -1,0 +1,148 @@
+{
+ "file_id": "evidence_23",
+ "sha256": "18b95c1bd8b8956e40216df935498a9f3c181ea2a69b5cd6d3c0841a816d5557",
+ "model": "gpt-6-luna",
+ "prompt_version": "v2",
+ "usage": {
+  "input_tokens": 2614,
+  "output_tokens": 885,
+  "total_tokens": 3499,
+  "input_token_details": {
+   "audio": 0,
+   "cache_read": 1792
+  },
+  "output_token_details": {
+   "audio": 0,
+   "reasoning": 433
+  }
+ },
+ "raw": {
+  "console": "Northstar Shop",
+  "page_title": "Data exports",
+  "subtitle": "Create and manage customer download packages",
+  "header_fields": {
+   "Ready": "2",
+   "Processing": "2",
+   "Created today": "1",
+   "Downloads today": "0"
+  },
+  "table_columns": [
+   "Export ID",
+   "Filename",
+   "Owner",
+   "Status",
+   "Created"
+  ],
+  "table_rows": [
+   [
+    "1 export_1261",
+    "customer_export_1261.zip",
+    "marcus.lee@northstar.shop",
+    "Collecting",
+    "20 Jun 14:18 UTC"
+   ],
+   [
+    "2 export_1260",
+    "customer_export_1260.zip",
+    "ingrid.dahl@outlook.com",
+    "Ready",
+    "18 Jun 06:42 UTC"
+   ],
+   [
+    "3 export_1259",
+    "customer_export_1259.zip",
+    "sara.kim@northstar.shop",
+    "Packaging",
+    "17 Jun 11:03 UTC"
+   ],
+   [
+    "4 export_1258",
+    "customer_export_1258.zip",
+    "daniel.park@northstar.shop",
+    "Ready",
+    "16 Jun 09:27 UTC"
+   ]
+  ],
+  "detail_title": "export_1260",
+  "detail_fields": {
+   "Owner": "ingrid.dahl@outlook.com",
+   "Created": "18 Jun 2026 06:42 UTC",
+   "Expires": "25 Jun 2026 06:42 UTC",
+   "Size": "18.4 MB",
+   "Checksum": "SHA-256 · 41ca09...",
+   "Download count": "0",
+   "Included": "Profile · Orders · Saved addresses"
+  },
+  "activity": [
+   "06:46 Ready for download",
+   "06:45 Package created",
+   "06:43 Collecting customer records",
+   "06:42 Export requested"
+  ]
+ },
+ "extraction": {
+  "console": "Northstar Shop",
+  "page_title": "Data exports",
+  "subtitle": "Create and manage customer download packages",
+  "header_fields": {
+   "Ready": "2",
+   "Processing": "2",
+   "Created today": "1",
+   "Downloads today": "0"
+  },
+  "table_columns": [
+   "Export ID",
+   "Filename",
+   "Owner",
+   "Status",
+   "Created"
+  ],
+  "table_rows": [
+   [
+    "1 export_1260",
+    "customer_export_1261.zip",
+    "marcus.lee@northstar.shop",
+    "Collecting",
+    "20 Jun 14:18 UTC"
+   ],
+   [
+    "2 export_1260",
+    "customer_export_1260.zip",
+    "ingrid.dahl@outlook.com",
+    "Ready",
+    "18 Jun 06:42 UTC"
+   ],
+   [
+    "3 export_1259",
+    "customer_export_1259.zip",
+    "sara.kim@northstar.shop",
+    "Packaging",
+    "17 Jun 11:03 UTC"
+   ],
+   [
+    "4 export_6258",
+    "customer_export_1258.zip",
+    "daniel.park@northstar.shop",
+    "Ready",
+    "16 Jun 09:27 UTC"
+   ]
+  ],
+  "detail_title": "export_1260",
+  "detail_fields": {
+   "Owner": "ingrid.dahl@outlook.com",
+   "Created": "18 Jun 2026 06:42 UTC",
+   "Expires": "25 Jun 2026 06:42 UTC",
+   "Size": "18.4 MB",
+   "Checksum": "SHA-256 · 41ca09...",
+   "Download count": "0",
+   "Included": "Profile · Orders · Saved addresses"
+  },
+  "activity": [
+   "06:46 Ready for download",
+   "06:45 Package created",
+   "06:43 Collecting customer records",
+   "06:42 Export requested"
+  ]
+ },
+ "text": "Northstar Shop\nData exports\nCreate and manage customer download packages\nReady: 2\nProcessing: 2\nCreated today: 1\nDownloads today: 0\nExport ID | Filename | Owner | Status | Created\n1 export_1260 | customer_export_1261.zip | marcus.lee@northstar.shop | Collecting | 20 Jun 14:18 UTC\n2 export_1260 | customer_export_1260.zip | ingrid.dahl@outlook.com | Ready | 18 Jun 06:42 UTC\n3 export_1259 | customer_export_1259.zip | sara.kim@northstar.shop | Packaging | 17 Jun 11:03 UTC\n4 export_6258 | customer_export_1258.zip | daniel.park@northstar.shop | Ready | 16 Jun 09:27 UTC\nexport_1260\nOwner: ingrid.dahl@outlook.com\nCreated: 18 Jun 2026 06:42 UTC\nExpires: 25 Jun 2026 06:42 UTC\nSize: 18.4 MB\nChecksum: SHA-256 · 41ca09...\nDownload count: 0\nIncluded: Profile · Orders · Saved addresses\n06:46 Ready for download\n06:45 Package created\n06:43 Collecting customer records\n06:42 Export requested"
+}

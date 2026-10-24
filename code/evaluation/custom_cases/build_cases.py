@@ -5,7 +5,7 @@ a tombstone that still holds an email hash, evidence dated after audit_at, a non
 non-English deletion request, a historical email next to a look-alike decoy, and a retained audit record next to a
 restorable backup. All people, emails and IDs are fictional. Gold is written here by hand, never produced by the pipeline.
 
-Run: python code/evaluation/custom_cases/build_cases.py   (writes code/evaluation/custom_cases/dataset/)
+Run: python code/evaluation/custom_cases/build_cases.py   (writes code/evaluation/custom_cases/fixtures/)
 """
 
 import csv
@@ -14,7 +14,7 @@ import shutil
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-OUT = HERE / "dataset"
+OUT = HERE / "fixtures"
 REAL = HERE.parents[2] / "dataset"
 HASH = "9f2c1e7a" * 8   # 64 hex characters
 

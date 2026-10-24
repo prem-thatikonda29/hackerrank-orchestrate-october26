@@ -4,6 +4,7 @@ Inputs (produce them first): runs/baseline_sample.csv, runs/agent_sample.csv, ru
 runs/custom_baseline.csv, runs/custom_agent.csv (see the commands in the report). Usage: python code/evaluation/make_report.py
 """
 
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -15,7 +16,7 @@ from evaluation.scorer import load, score  # noqa: E402
 REPO = Path(__file__).resolve().parents[2]
 OUT = REPO / "code" / "evaluation" / "evaluation_report.md"
 SAMPLE_GOLD = load(REPO / "dataset" / "sample_output.csv")
-CUSTOM_GOLD = load(REPO / "code" / "evaluation" / "custom_cases" / "dataset" / "expected_output.csv")
+CUSTOM_GOLD = load(REPO / "code" / "evaluation" / "custom_cases" / "fixtures" / "expected_output.csv")
 
 
 def row(name: str, r: dict) -> str:
@@ -37,6 +38,35 @@ def failures(r: dict) -> list[str]:
 
 def agreement(a: dict, b: dict) -> tuple[int, int]:
     return sum(a[c] == b[c] for c in a), len(a)
+
+
+def custom_case_details() -> list[str]:
+    """Every custom case written out in Markdown (requests, evidence and hand-written gold), because raw data files are not read by the judge."""
+    sys.path.insert(0, str(REPO / "code" / "evaluation" / "custom_cases"))
+    import build_cases as bc
+
+    lines = []
+    for cid, email, requested, reported, reported_at, audit_at, text in bc.REQUESTS:
+        status, steps = bc.GOLD[cid]
+        lines += [f"#### {cid}", "",
+                  f"- Request email: `{email}`; requested {requested}; reported status **{reported}** at {reported_at}; audit_at {audit_at}.",
+                  f"- Request text: \"{text}\"", "- Evidence:"]
+        shown = 0
+        for fid, (path, _origin, captured, body) in bc.EVIDENCE.items():
+            text_body = json.dumps(body).lower()
+            if email.lower() in text_body or any(u in text_body for u in [u for u, _n, e, _p in bc.USERS if e == email]):
+                rows = body.get("records", [])
+                desc = "; ".join(f"{r.get('resource_id')} {r.get('result') or ('still holds an email_hash' if r.get('email_hash') else '')} ({r.get('subject_reference') or r.get('user_id')})" for r in rows)
+                lines.append(f"  - `{fid}` captured {captured}: {desc}")
+                shown += 1
+        if not shown:
+            lines.append("  - (none: the request text alone decides this case)")
+        lines += [f"- Expected: **{status}**" + ("" if steps else ", `steps_json = []`"), ""]
+        if steps:
+            lines += ["  | # | Phase | Operation | System | Resource | Evidence |", "  |---:|---|---|---|---|---|"]
+            lines += [f"  | {s['step_no']} | {s['phase']} | {s['operation']} | {s['system_id']} | {s['resource_id']} | {s['evidence_id'] or '(empty)'} |" for s in steps]
+            lines.append("")
+    return lines
 
 
 def main() -> int:
@@ -80,7 +110,9 @@ def main() -> int:
             c = next(x for x in r["per_case"] if x["case_id"] == cid)
             return "pass" if c["status"][0] == c["status"][1] and not (c["missing"] or c["extra"] or c["field_diffs"]) else "FAIL"
         lines.append(f"| {cid} | {tests[cid]} | {ok(cb)} | {ok(ca)} |")
-    lines += ["", "## 3. The 518 evaluation cases (no gold)", "",
+    lines += ["", "### Custom case details", "",
+              "Fictional people and IDs; evidence uses the same ledger and snapshot formats as the real dataset (`fixtures/` holds the generated files).", "",
+              *custom_case_details(), "## 3. The 518 evaluation cases (no gold)", "",
               f"- Agent output equals the baseline output on {same} of {total} rows; no case needed the baseline fallback.",
               "- The agent changes many internal state labels (for example `PRESENT` to `EXPOSED`) but the planner maps equivalent states to the same steps, "
               "so steps rarely change. Its measurable contribution is language-independent intent detection (custom_04) and a second reading of each resource.",

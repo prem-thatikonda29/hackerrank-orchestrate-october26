@@ -38,6 +38,109 @@ Seven fictional cases in `code/evaluation/custom_cases/` (generator `build_cases
 | custom_06 | historical email with a look-alike decoy owned by another person | pass | pass |
 | custom_07 | retained audit record next to a restorable backup (restore risk, retained record verified present) | pass | pass |
 
+### Custom case details
+
+Fictional people and IDs; evidence uses the same ledger and snapshot formats as the real dataset (`fixtures/` holds the generated files).
+
+#### custom_01
+
+- Request email: `nadia.okafor@example.org`; requested 2026-10-01T08:00:00Z; reported status **COMPLETE** at 2026-10-02T02:00:00Z; audit_at 2026-10-03T12:00:00Z.
+- Request text: "Please delete my account and every copy of my personal data. Confirm when the review is complete."
+- Evidence:
+  - `evidence_01` captured 2026-10-02T10:00:00Z: account_9101 FOUND (nadia.okafor@example.org); data_flow_9201 ACTIVE (nadia.okafor@example.org)
+- Expected: **INCOMPLETE**
+
+  | # | Phase | Operation | System | Resource | Evidence |
+  |---:|---|---|---|---|---|
+  | 1 | FINDING | REPORT_REMAINING_RECORD | account_service | account_9101 | evidence_01 |
+  | 2 | FINDING | REPORT_ACTIVE_DATA_FLOW | integration_service | data_flow_9201 | evidence_01 |
+  | 3 | REMEDIATION | DISABLE_DATA_FLOW | integration_service | data_flow_9201 | (empty) |
+  | 4 | REMEDIATION | DELETE_RECORD | account_service | account_9101 | (empty) |
+  | 5 | VERIFICATION | VERIFY_RECORD_ABSENT | account_service | account_9101 | (empty) |
+  | 6 | VERIFICATION | VERIFY_DATA_FLOW_DISABLED | integration_service | data_flow_9201 | (empty) |
+
+#### custom_02
+
+- Request email: `daniel.reyes@example.org`; requested 2026-10-01T08:00:00Z; reported status **COMPLETE** at 2026-10-02T03:00:00Z; audit_at 2026-10-03T10:00:00Z.
+- Request text: "I want my account erased. Follow the retention rules for anything you must keep."
+- Evidence:
+  - `evidence_02` captured 2026-10-02T09:00:00Z: account_9102 NOT_FOUND (daniel.reyes@example.org)
+  - `evidence_03` captured 2026-10-02T09:30:00Z: tombstone_9302 still holds an email_hash (user_902)
+- Expected: **INCOMPLETE**
+
+  | # | Phase | Operation | System | Resource | Evidence |
+  |---:|---|---|---|---|---|
+  | 1 | FINDING | REPORT_EXPOSED_PII | identity_service | tombstone_9302 | evidence_03 |
+  | 2 | REMEDIATION | REDACT_RECORD | identity_service | tombstone_9302 | (empty) |
+  | 3 | VERIFICATION | VERIFY_RECORD_ABSENT | account_service | account_9102 | (empty) |
+  | 4 | VERIFICATION | VERIFY_RECORD_REDACTED | identity_service | tombstone_9302 | (empty) |
+
+#### custom_03
+
+- Request email: `marta.lindqvist@example.org`; requested 2026-10-01T08:00:00Z; reported status **COMPLETE** at 2026-10-02T04:00:00Z; audit_at 2026-10-03T12:00:00Z.
+- Request text: "Please permanently delete the account registered to this address."
+- Evidence:
+  - `evidence_04` captured 2026-10-02T11:00:00Z: account_9103 NOT_FOUND (marta.lindqvist@example.org); search_9403 NOT_FOUND (marta.lindqvist@example.org)
+  - `evidence_05` captured 2026-10-05T11:00:00Z: search_9403 FOUND (marta.lindqvist@example.org)
+- Expected: **COMPLETE**
+
+  | # | Phase | Operation | System | Resource | Evidence |
+  |---:|---|---|---|---|---|
+  | 1 | VERIFICATION | VERIFY_RECORD_ABSENT | account_service | account_9103 | evidence_04 |
+  | 2 | VERIFICATION | VERIFY_RECORD_ABSENT | search_service | search_9403 | evidence_04 |
+
+#### custom_04
+
+- Request email: `hugo.marchand@example.org`; requested 2026-10-01T08:00:00Z; reported status **COMPLETE** at 2026-10-02T05:00:00Z; audit_at 2026-10-03T12:00:00Z.
+- Request text: "Bonjour, je souhaite uniquement corriger l'orthographe de mon nom sur mon compte. Merci de ne pas supprimer mon compte ni mes données."
+- Evidence:
+  - (none: the request text alone decides this case)
+- Expected: **NOT_APPLICABLE**, `steps_json = []`
+
+#### custom_05
+
+- Request email: `camille.roux@example.org`; requested 2026-10-01T08:00:00Z; reported status **COMPLETE** at 2026-10-02T06:00:00Z; audit_at 2026-10-03T12:00:00Z.
+- Request text: "Je vous prie de supprimer définitivement mon compte ainsi que toutes les données personnelles associées."
+- Evidence:
+  - `evidence_06` captured 2026-10-02T12:00:00Z: account_9108 NOT_FOUND (camille.roux@example.org); search_9408 NOT_FOUND (camille.roux@example.org)
+- Expected: **COMPLETE**
+
+  | # | Phase | Operation | System | Resource | Evidence |
+  |---:|---|---|---|---|---|
+  | 1 | VERIFICATION | VERIFY_RECORD_ABSENT | account_service | account_9108 | evidence_06 |
+  | 2 | VERIFICATION | VERIFY_RECORD_ABSENT | search_service | search_9408 | evidence_06 |
+
+#### custom_06
+
+- Request email: `tomas.novak@example.org`; requested 2026-10-01T08:00:00Z; reported status **PARTIALLY_COMPLETE** at 2026-10-02T07:00:00Z; audit_at 2026-10-03T12:00:00Z.
+- Request text: "Please erase the account that used this email address. Include records linked to earlier identifiers."
+- Evidence:
+  - `evidence_07` captured 2026-10-02T09:00:00Z: account_9105 NOT_FOUND (user_905); search_9405 FOUND (tomas.novak@example.org); search_9407 FOUND (tomas.novak1@example.org)
+- Expected: **INCOMPLETE**
+
+  | # | Phase | Operation | System | Resource | Evidence |
+  |---:|---|---|---|---|---|
+  | 1 | FINDING | REPORT_REMAINING_RECORD | search_service | search_9405 | evidence_07 |
+  | 2 | REMEDIATION | DELETE_RECORD | search_service | search_9405 | (empty) |
+  | 3 | VERIFICATION | VERIFY_RECORD_ABSENT | account_service | account_9105 | (empty) |
+  | 4 | VERIFICATION | VERIFY_RECORD_ABSENT | search_service | search_9405 | (empty) |
+
+#### custom_07
+
+- Request email: `ines.carvalho@example.org`; requested 2026-10-01T08:00:00Z; reported status **NOT_STARTED** at 2026-10-02T08:00:00Z; audit_at 2026-10-03T12:00:00Z.
+- Request text: "I would like my account and personal data deleted under the standard procedure."
+- Evidence:
+  - `evidence_08` captured 2026-10-02T09:00:00Z: account_9106 NOT_FOUND (ines.carvalho@example.org); audit_record_9506 FOUND (user_906); backup_9606 ACTIVE (ines.carvalho@example.org)
+- Expected: **INCOMPLETE**
+
+  | # | Phase | Operation | System | Resource | Evidence |
+  |---:|---|---|---|---|---|
+  | 1 | FINDING | REPORT_RESTORE_RISK | backup_service | backup_9606 | evidence_08 |
+  | 2 | REMEDIATION | BLOCK_RESTORE | backup_service | backup_9606 | (empty) |
+  | 3 | VERIFICATION | VERIFY_RECORD_ABSENT | account_service | account_9106 | (empty) |
+  | 4 | VERIFICATION | VERIFY_RECORD_PRESENT | security_service | audit_record_9506 | (empty) |
+  | 5 | VERIFICATION | VERIFY_RESTORE_BLOCKED | backup_service | backup_9606 | (empty) |
+
 ## 3. The 518 evaluation cases (no gold)
 
 - Agent output equals the baseline output on 518 of 518 rows; no case needed the baseline fallback.

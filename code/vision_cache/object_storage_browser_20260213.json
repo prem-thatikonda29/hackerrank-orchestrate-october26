@@ -1,0 +1,202 @@
+{
+ "file_id": "evidence_46",
+ "sha256": "96e9a191380c29b9e0ab997007268c4cd6353cb6721ebd1ed4a32599d8d37e04",
+ "model": "gpt-6-luna",
+ "prompt_version": "v2",
+ "usage": {
+  "input_tokens": 2682,
+  "output_tokens": 873,
+  "total_tokens": 3555,
+  "input_token_details": {
+   "audio": 0,
+   "cache_read": 1792
+  },
+  "output_token_details": {
+   "audio": 0,
+   "reasoning": 354
+  }
+ },
+ "raw": {
+  "console": "Northstar Shop",
+  "page_title": "northstar-customer-data",
+  "subtitle": "eu-west-1 / support-attachments / 2026 / 02",
+  "header_fields": {
+   "Account": "Northstar Production",
+   "Region": "eu-west-1",
+   "Captured": "13 Feb 2026 08:00 UTC",
+   "Storage class": "All"
+  },
+  "table_columns": [
+   "Name",
+   "Size",
+   "Modified (UTC)",
+   "Storage class",
+   "Version"
+  ],
+  "table_rows": [
+   [
+    "delivery_confirmation_19.pdf",
+    "684 KB",
+    "12 Feb 18:42",
+    "Standard",
+    "v3"
+   ],
+   [
+    "delivery_confirmation_20.pdf",
+    "712 KB",
+    "11 Feb 14:17",
+    "Standard",
+    "v1"
+   ],
+   [
+    "return_label_4821.pdf",
+    "203 KB",
+    "10 Feb 09:33",
+    "Standard",
+    "v1"
+   ],
+   [
+    "return_label_4876.pdf",
+    "198 KB",
+    "11 Feb 16:05",
+    "Standard",
+    "v2"
+   ],
+   [
+    "invoice_NS-10493.pdf",
+    "318 KB",
+    "10 Feb 11:21",
+    "Standard",
+    "v1"
+   ],
+   [
+    "parcel_damage_7713.jpg",
+    "2.4 MB",
+    "12 Feb 10:08",
+    "Standard",
+    "v1"
+   ],
+   [
+    "customer_export_2026-02-10.zip",
+    "128 MB",
+    "10 Feb 23:14",
+    "Standard",
+    "v1"
+   ],
+   [
+    "customer_export_2026-02-12.zip",
+    "131 MB",
+    "12 Feb 21:56",
+    "Standard",
+    "v1"
+   ]
+  ],
+  "detail_title": "delivery_confirmation_19.pdf",
+  "detail_fields": {
+   "Size": "684 KB",
+   "Version": "v3",
+   "Content type": "application/pdf",
+   "Encryption": "AES-256",
+   "Checksum": "e71b6d...",
+   "Uploader": "support-service",
+   "Modified": "12 Feb 2026 18:42 UTC"
+  },
+  "activity": [
+   "v3 — 12 Feb 18:42 · metadata update",
+   "v2 — 12 Feb 18:39 · upload complete",
+   "v1 — 12 Feb 18:38 · object created"
+  ]
+ },
+ "extraction": {
+  "console": "Northstar Shop",
+  "page_title": "northstar-customer-data",
+  "subtitle": "eu-west-1 / support-attachments / 2026 / 02",
+  "header_fields": {
+   "Account": "Northstar Production",
+   "Region": "eu-west-1",
+   "Captured": "13 Feb 2026 08:00 UTC",
+   "Storage class": "All"
+  },
+  "table_columns": [
+   "Name",
+   "Size",
+   "Modified (UTC)",
+   "Storage class",
+   "Version"
+  ],
+  "table_rows": [
+   [
+    "delivery_confirmation_19.pdf",
+    "684 KB",
+    "12 Feb 18:42",
+    "Standard",
+    "v3"
+   ],
+   [
+    "delivery_confirmation_20.pdf",
+    "712 KB",
+    "11 Feb 14:17",
+    "Standard",
+    "v1"
+   ],
+   [
+    "return_label_4821.pdf",
+    "203 KB",
+    "10 Feb 09:33",
+    "Standard",
+    "v1"
+   ],
+   [
+    "return_label_4876.pdf",
+    "198 KB",
+    "11 Feb 16:05",
+    "Standard",
+    "v2"
+   ],
+   [
+    "invoice_NS-10493.pdf",
+    "318 KB",
+    "10 Feb 11:21",
+    "Standard",
+    "v1"
+   ],
+   [
+    "parcel_damage_7713.jpg",
+    "2.4 MB",
+    "12 Feb 10:08",
+    "Standard",
+    "v1"
+   ],
+   [
+    "customer_export_2026-02-10.zip",
+    "128 MB",
+    "10 Feb 23:14",
+    "Standard",
+    "v1"
+   ],
+   [
+    "customer_export_2026-02-12.zip",
+    "131 MB",
+    "12 Feb 21:56",
+    "Standard",
+    "v1"
+   ]
+  ],
+  "detail_title": "delivery_confirmation_19.pdf",
+  "detail_fields": {
+   "Size": "684 KB",
+   "Version": "v3",
+   "Content type": "application/pdf",
+   "Encryption": "AES-256",
+   "Checksum": "e71b6d...",
+   "Uploader": "support-service",
+   "Modified": "12 Feb 2026 18:42 UTC"
+  },
+  "activity": [
+   "v3 — 12 Feb 18:42 · metadata update",
+   "v2 — 12 Feb 18:39 · upload complete",
+   "v1 — 12 Feb 18:38 · object created"
+  ]
+ },
+ "text": "Northstar Shop\nnorthstar-customer-data\neu-west-1 / support-attachments / 2026 / 02\nAccount: Northstar Production\nRegion: eu-west-1\nCaptured: 13 Feb 2026 08:00 UTC\nStorage class: All\nName | Size | Modified (UTC) | Storage class | Version\ndelivery_confirmation_19.pdf | 684 KB | 12 Feb 18:42 | Standard | v3\ndelivery_confirmation_20.pdf | 712 KB | 11 Feb 14:17 | Standard | v1\nreturn_label_4821.pdf | 203 KB | 10 Feb 09:33 | Standard | v1\nreturn_label_4876.pdf | 198 KB | 11 Feb 16:05 | Standard | v2\ninvoice_NS-10493.pdf | 318 KB | 10 Feb 11:21 | Standard | v1\nparcel_damage_7713.jpg | 2.4 MB | 12 Feb 10:08 | Standard | v1\ncustomer_export_2026-02-10.zip | 128 MB | 10 Feb 23:14 | Standard | v1\ncustomer_export_2026-02-12.zip | 131 MB | 12 Feb 21:56 | Standard | v1\ndelivery_confirmation_19.pdf\nSize: 684 KB\nVersion: v3\nContent type: application/pdf\nEncryption: AES-256\nChecksum: e71b6d...\nUploader: support-service\nModified: 12 Feb 2026 18:42 UTC\nv3 — 12 Feb 18:42 · metadata update\nv2 — 12 Feb 18:39 · upload complete\nv1 — 12 Feb 18:38 · object created"
+}

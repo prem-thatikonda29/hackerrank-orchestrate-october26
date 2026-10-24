@@ -1,0 +1,204 @@
+{
+ "file_id": "evidence_37",
+ "sha256": "ca59f693f4e7002466b3fdeaf1bb6763618770963dd811b60003772d07b4b03b",
+ "model": "gpt-6-luna",
+ "prompt_version": "v2",
+ "usage": {
+  "input_tokens": 2614,
+  "output_tokens": 1017,
+  "total_tokens": 3631,
+  "input_token_details": {
+   "audio": 0,
+   "cache_read": 1792
+  },
+  "output_token_details": {
+   "audio": 0,
+   "reasoning": 448
+  }
+ },
+ "raw": {
+  "console": "Northstar Shop",
+  "page_title": "Account events",
+  "subtitle": "Subject filter: user_03 · 18–26 Aug 2026 UTC",
+  "header_fields": {
+   "Events": "6",
+   "Categories": "5",
+   "Integrity failures": "0",
+   "Partition": "2026-Q3"
+  },
+  "table_columns": [
+   "Time (UTC)",
+   "Event",
+   "Category",
+   "Subject",
+   "Actor",
+   "Integrity",
+   "Reference"
+  ],
+  "table_rows": [
+   [
+    "1 25 Aug 04:03",
+    "Account closure recorded",
+    "Account lifecycle",
+    "user_03",
+    "Automated workflow",
+    "Valid",
+    "audit_record_003"
+   ],
+   [
+    "2 25 Aug 03:21",
+    "Session revoked",
+    "Session management",
+    "user_03",
+    "Security system",
+    "Valid",
+    "audit_record_002"
+   ],
+   [
+    "3 24 Aug 16:14",
+    "Recovery challenge completed",
+    "Authentication",
+    "user_03",
+    "User (self)",
+    "Valid",
+    "audit_record_001"
+   ],
+   [
+    "4 22 Aug 11:27",
+    "Email change confirmed",
+    "Profile update",
+    "user_03",
+    "User (self)",
+    "Valid",
+    "audit_record_006"
+   ],
+   [
+    "5 20 Aug 09:42",
+    "Login from new device",
+    "Authentication",
+    "user_03",
+    "User (self)",
+    "Valid",
+    "audit_record_005"
+   ],
+   [
+    "6 18 Aug 14:05",
+    "Password changed",
+    "Authentication",
+    "user_03",
+    "User (self)",
+    "Valid",
+    "audit_record_004"
+   ]
+  ],
+  "detail_title": "audit_record_003 · Raw event",
+  "detail_fields": {
+   "event_type": "account_closure_recorded",
+   "subject": "user_03",
+   "actor": "automated account workflow",
+   "recorded_at": "2026-08-25T04:03:00Z",
+   "fingerprint": "8f0c...31ad",
+   "signature": "Valid",
+   "journal": "2026-Q3"
+  },
+  "activity": [
+   "25 Aug Account closure recorded",
+   "25 Aug Session revoked",
+   "24 Aug Recovery challenge completed",
+   "22 Aug Email change confirmed"
+  ]
+ },
+ "extraction": {
+  "console": "Northstar Shop",
+  "page_title": "Account events",
+  "subtitle": "Subject filter: user_03 · 18–26 Aug 2026 UTC",
+  "header_fields": {
+   "Events": "6",
+   "Categories": "5",
+   "Integrity failures": "0",
+   "Partition": "2026-Q3"
+  },
+  "table_columns": [
+   "Time (UTC)",
+   "Event",
+   "Category",
+   "Subject",
+   "Actor",
+   "Integrity",
+   "Reference"
+  ],
+  "table_rows": [
+   [
+    "1 25 Aug 04:03",
+    "Account closure recorded",
+    "Account lifecycle",
+    "user_03",
+    "Automated workflow",
+    "Valid",
+    "audit_record_003"
+   ],
+   [
+    "2 25 Aug 03:21",
+    "Session revoked",
+    "Session management",
+    "user_03",
+    "Security system",
+    "Valid",
+    "audit_record_002"
+   ],
+   [
+    "3 24 Aug 16:14",
+    "Recovery challenge completed",
+    "Authentication",
+    "user_03",
+    "User (self)",
+    "Valid",
+    "audit_record_003"
+   ],
+   [
+    "4 22 Aug 11:27",
+    "Email change confirmed",
+    "Profile update",
+    "user_03",
+    "User (self)",
+    "Valid",
+    "audit_record_006"
+   ],
+   [
+    "5 20 Aug 09:42",
+    "Login from new device",
+    "Authentication",
+    "user_03",
+    "User (self)",
+    "Valid",
+    "audit_record_003"
+   ],
+   [
+    "6 18 Aug 14:05",
+    "Password changed",
+    "Authentication",
+    "user_03",
+    "User (self)",
+    "Valid",
+    "audit_record_003"
+   ]
+  ],
+  "detail_title": "audit_record_003 · Raw event",
+  "detail_fields": {
+   "event_type": "account_closure_recorded",
+   "subject": "user_03",
+   "actor": "automated account workflow",
+   "recorded_at": "2026-08-25T04:03:00Z",
+   "fingerprint": "8f0c...31ad",
+   "signature": "Valid",
+   "journal": "2026-Q3"
+  },
+  "activity": [
+   "25 Aug Account closure recorded",
+   "25 Aug Session revoked",
+   "24 Aug Recovery challenge completed",
+   "22 Aug Email change confirmed"
+  ]
+ },
+ "text": "Northstar Shop\nAccount events\nSubject filter: user_03 · 18–26 Aug 2026 UTC\nEvents: 6\nCategories: 5\nIntegrity failures: 0\nPartition: 2026-Q3\nTime (UTC) | Event | Category | Subject | Actor | Integrity | Reference\n1 25 Aug 04:03 | Account closure recorded | Account lifecycle | user_03 | Automated workflow | Valid | audit_record_003\n2 25 Aug 03:21 | Session revoked | Session management | user_03 | Security system | Valid | audit_record_002\n3 24 Aug 16:14 | Recovery challenge completed | Authentication | user_03 | User (self) | Valid | audit_record_003\n4 22 Aug 11:27 | Email change confirmed | Profile update | user_03 | User (self) | Valid | audit_record_006\n5 20 Aug 09:42 | Login from new device | Authentication | user_03 | User (self) | Valid | audit_record_003\n6 18 Aug 14:05 | Password changed | Authentication | user_03 | User (self) | Valid | audit_record_003\naudit_record_003 · Raw event\nevent_type: account_closure_recorded\nsubject: user_03\nactor: automated account workflow\nrecorded_at: 2026-08-25T04:03:00Z\nfingerprint: 8f0c...31ad\nsignature: Valid\njournal: 2026-Q3\n25 Aug Account closure recorded\n25 Aug Session revoked\n24 Aug Recovery challenge completed\n22 Aug Email change confirmed"
+}

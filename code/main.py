@@ -43,6 +43,12 @@ def main() -> int:
     ap.add_argument("--skip-index", action="store_true", help="reuse an existing build/index.sqlite")
     args = ap.parse_args()
 
+    if args.engine == "agent":
+        import llm_config
+
+        if not llm_config.settings()["api_key"]:
+            print("WARNING: no OPENAI_API_KEY or LLM_API_KEY set; using the rule-based baseline engine (no model calls).", file=sys.stderr)
+            args.engine = "baseline"
     if not args.skip_index:
         ensure_screenshots()
         Builder().run()

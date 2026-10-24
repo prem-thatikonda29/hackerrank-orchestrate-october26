@@ -1,0 +1,158 @@
+{
+ "file_id": "evidence_14",
+ "sha256": "e81fabc93ea1b5f4c918d934cdb2bea05d61737adfcc29f281494f5d8ec46355",
+ "model": "gpt-6-luna",
+ "prompt_version": "v2",
+ "usage": {
+  "input_tokens": 2682,
+  "output_tokens": 920,
+  "total_tokens": 3602,
+  "input_token_details": {
+   "audio": 0,
+   "cache_read": 1792
+  },
+  "output_token_details": {
+   "audio": 0,
+   "reasoning": 469
+  }
+ },
+ "raw": {
+  "console": "Northstar Shop",
+  "page_title": "Connections",
+  "subtitle": "PRODUCTION · eu-west · 07 Aug 2026 08:00 UTC",
+  "header_fields": {
+   "Healthy": "12",
+   "Events / hour": "4,113",
+   "Delivery p95": "1.8 s",
+   "Backlog": "18",
+   "Destination health": "Healthy"
+  },
+  "table_columns": [
+   "Connector",
+   "Destination",
+   "Selector",
+   "Mode",
+   "Events/hour",
+   "Last contact"
+  ],
+  "table_rows": [
+   [
+    "1 data_flow_1121",
+    "customer_analytics_warehouse",
+    "jain.aditi@gmail.com",
+    "Continuous",
+    "1,284",
+    "07:59:42"
+   ],
+   [
+    "2 data_flow_9846",
+    "customer_analytics_warehouse",
+    "lucia-torres@gmail.com",
+    "Continuous",
+    "842",
+    "07:59:36"
+   ],
+   [
+    "3 Order notifications",
+    "notification_service",
+    "order events",
+    "Continuous",
+    "650",
+    "07:59:28"
+   ],
+   [
+    "4 Delivery tracking",
+    "logistics_warehouse",
+    "shipment events",
+    "Continuous",
+    "420",
+    "07:59:13"
+   ]
+  ],
+  "detail_title": "data_flow_1121",
+  "detail_fields": {
+   "Status": "Healthy",
+   "Owner": "Data Platform",
+   "Destination": "customer_analytics_warehouse",
+   "Selector": "jain.aditi@gmail.com",
+   "Sync mode": "Continuous sync",
+   "Last response": "200 OK · 1.8 s"
+  },
+  "activity": [
+   "07:59:42 124 events delivered",
+   "07:58:10 checkpoint committed",
+   "07:56:44 18 events retried",
+   "07:55:02 destination acknowledged batch"
+  ]
+ },
+ "extraction": {
+  "console": "Northstar Shop",
+  "page_title": "Connections",
+  "subtitle": "PRODUCTION · eu-west · 07 Aug 2026 08:00 UTC",
+  "header_fields": {
+   "Healthy": "12",
+   "Events / hour": "4,113",
+   "Delivery p95": "1.8 s",
+   "Backlog": "18",
+   "Destination health": "Healthy"
+  },
+  "table_columns": [
+   "Connector",
+   "Destination",
+   "Selector",
+   "Mode",
+   "Events/hour",
+   "Last contact"
+  ],
+  "table_rows": [
+   [
+    "1 data_flow_1121",
+    "customer_analytics_warehouse",
+    "jain.aditi@gmail.com",
+    "Continuous",
+    "1,284",
+    "07:59:42"
+   ],
+   [
+    "2 data_flow_9846",
+    "customer_analytics_warehouse",
+    "lucia-torres@gmail.com",
+    "Continuous",
+    "842",
+    "07:59:36"
+   ],
+   [
+    "3 Order notifications",
+    "notification_service",
+    "order events",
+    "Continuous",
+    "650",
+    "07:59:28"
+   ],
+   [
+    "4 Delivery tracking",
+    "logistics_warehouse",
+    "shipment events",
+    "Continuous",
+    "420",
+    "07:59:13"
+   ]
+  ],
+  "detail_title": "data_flow_1121",
+  "detail_fields": {
+   "Status": "Healthy",
+   "Owner": "Data Platform",
+   "Destination": "customer_analytics_warehouse",
+   "Selector": "jain.aditi@gmail.com",
+   "Sync mode": "Continuous sync",
+   "Last response": "200 OK · 1.8 s"
+  },
+  "activity": [
+   "07:59:42 124 events delivered",
+   "07:58:10 checkpoint committed",
+   "07:56:44 18 events retried",
+   "07:55:02 destination acknowledged batch"
+  ]
+ },
+ "text": "Northstar Shop\nConnections\nPRODUCTION · eu-west · 07 Aug 2026 08:00 UTC\nHealthy: 12\nEvents / hour: 4,113\nDelivery p95: 1.8 s\nBacklog: 18\nDestination health: Healthy\nConnector | Destination | Selector | Mode | Events/hour | Last contact\n1 data_flow_1121 | customer_analytics_warehouse | jain.aditi@gmail.com | Continuous | 1,284 | 07:59:42\n2 data_flow_9846 | customer_analytics_warehouse | lucia-torres@gmail.com | Continuous | 842 | 07:59:36\n3 Order notifications | notification_service | order events | Continuous | 650 | 07:59:28\n4 Delivery tracking | logistics_warehouse | shipment events | Continuous | 420 | 07:59:13\ndata_flow_1121\nStatus: Healthy\nOwner: Data Platform\nDestination: customer_analytics_warehouse\nSelector: jain.aditi@gmail.com\nSync mode: Continuous sync\nLast response: 200 OK · 1.8 s\n07:59:42 124 events delivered\n07:58:10 checkpoint committed\n07:56:44 18 events retried\n07:55:02 destination acknowledged batch"
+}

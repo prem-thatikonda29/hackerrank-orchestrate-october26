@@ -1,0 +1,126 @@
+{
+ "file_id": "evidence_60",
+ "sha256": "51fa0e6a38f8fa3629ba1b0d0b90b4ed139715956b97bfd09a6f1a6232c15df5",
+ "model": "gpt-6-luna",
+ "prompt_version": "v2",
+ "usage": {
+  "input_tokens": 1855,
+  "output_tokens": 1135,
+  "total_tokens": 2990,
+  "input_token_details": {
+   "audio": 0,
+   "cache_read": 0
+  },
+  "output_token_details": {
+   "audio": 0,
+   "reasoning": 753
+  }
+ },
+ "raw": {
+  "console": "Northstar Shop",
+  "page_title": "Soo-jin Park",
+  "subtitle": "marketing_001 · sj.park@naver.com · +82 10-5837-9451",
+  "header_fields": {
+   "Market": "South Korea",
+   "Language": "Korean",
+   "Email opt-in": "Yes",
+   "SMS opt-in": "No",
+   "Last refreshed": "15 Sep 2026 23:40 UTC"
+  },
+  "table_columns": [
+   "Time",
+   "Activity",
+   "Detail"
+  ],
+  "table_rows": [
+   [
+    "1 23:40",
+    "Product-category update",
+    "Desk accessories · Drinkware"
+   ],
+   [
+    "2 23:38",
+    "Campaign eligibility check",
+    "Autumn offers · Eligible"
+   ],
+   [
+    "3 23:35",
+    "Profile refresh",
+    "Live profile fields updated"
+   ],
+   [
+    "4 23:32",
+    "Audience evaluation",
+    "Returning customers — East Asia"
+   ]
+  ],
+  "detail_title": "Audience membership",
+  "detail_fields": {
+   "Audience": "Returning customers — East Asia",
+   "Segments": "Repeat customer · Home & lifestyle · Mobile shopper",
+   "Preferred categories": "Desk accessories · Drinkware",
+   "Last campaign": "Autumn offers",
+   "Open rate": "32.4%",
+   "Click rate": "6.8%"
+  },
+  "activity": [
+   "Autumn offers 32.4% open rate",
+   "Home & Lifestyle Picks 28.7% open rate",
+   "Profile refreshed from live data Recorded"
+  ]
+ },
+ "extraction": {
+  "console": "Northstar Shop",
+  "page_title": "Soo-jin Park",
+  "subtitle": "marketing_001 · sj.park@naver.com · +82 10-5837-9451",
+  "header_fields": {
+   "Market": "South Korea",
+   "Language": "Korean",
+   "Email opt-in": "Yes",
+   "SMS opt-in": "No",
+   "Last refreshed": "15 Sep 2026 23:40 UTC"
+  },
+  "table_columns": [
+   "Time",
+   "Activity",
+   "Detail"
+  ],
+  "table_rows": [
+   [
+    "1 23:40",
+    "Product-category update",
+    "Desk accessories · Drinkware"
+   ],
+   [
+    "2 23:38",
+    "Campaign eligibility check",
+    "Autumn offers · Eligible"
+   ],
+   [
+    "3 23:35",
+    "Profile refresh",
+    "Live profile fields updated"
+   ],
+   [
+    "4 23:32",
+    "Audience evaluation",
+    "Returning customers — East Asia"
+   ]
+  ],
+  "detail_title": "Audience membership",
+  "detail_fields": {
+   "Audience": "Returning customers — East Asia",
+   "Segments": "Repeat customer · Home & lifestyle · Mobile shopper",
+   "Preferred categories": "Desk accessories · Drinkware",
+   "Last campaign": "Autumn offers",
+   "Open rate": "32.4%",
+   "Click rate": "6.8%"
+  },
+  "activity": [
+   "Autumn offers 32.4% open rate",
+   "Home & Lifestyle Picks 28.7% open rate",
+   "Profile refreshed from live data Recorded"
+  ]
+ },
+ "text": "Northstar Shop\nSoo-jin Park\nmarketing_001 · sj.park@naver.com · +82 10-5837-9451\nMarket: South Korea\nLanguage: Korean\nEmail opt-in: Yes\nSMS opt-in: No\nLast refreshed: 15 Sep 2026 23:40 UTC\nTime | Activity | Detail\n1 23:40 | Product-category update | Desk accessories · Drinkware\n2 23:38 | Campaign eligibility check | Autumn offers · Eligible\n3 23:35 | Profile refresh | Live profile fields updated\n4 23:32 | Audience evaluation | Returning customers — East Asia\nAudience membership\nAudience: Returning customers — East Asia\nSegments: Repeat customer · Home & lifestyle · Mobile shopper\nPreferred categories: Desk accessories · Drinkware\nLast campaign: Autumn offers\nOpen rate: 32.4%\nClick rate: 6.8%\nAutumn offers 32.4% open rate\nHome & Lifestyle Picks 28.7% open rate\nProfile refreshed from live data Recorded"
+}
