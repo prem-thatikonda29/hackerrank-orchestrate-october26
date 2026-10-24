@@ -9,6 +9,7 @@ import json
 import re
 import sqlite3
 import sys
+from datetime import datetime
 from collections import defaultdict
 from pathlib import Path
 
@@ -60,8 +61,25 @@ CREATE INDEX keys_obs ON obs_keys(obs_id);
 """
 
 
+LINK_DELAY_S = 420   # the catalog links a resource 7 minutes after the primary evidence file was captured
+MONTHS = {m: i for i, m in enumerate(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 1)}
+
+
 def norm_phone(value: str) -> str:
     return re.sub(r"\D", "", value)
+
+
+def norm_phone_text(text: str) -> str:
+    return re.sub(r"\D", "", text)
+
+
+def ts_(value: str) -> datetime:
+    return datetime.fromisoformat(value.replace("Z", "+00:00"))
+
+
+def parse_human_date(day_month_year: str, hh: str | None, mm: str | None) -> str:
+    d, mon, y = day_month_year.split()
+    return f"{int(y):04d}-{MONTHS[mon]:02d}-{int(d):02d}T{int(hh or 0):02d}:{int(mm or 0):02d}:00Z"
 
 
 def keys_from(record: dict, extra_text: str = "") -> set[tuple[str, str]]:
@@ -384,6 +402,55 @@ class Builder:
             elif ev == "restore_authorization_completed":
                 self.add_obs(file_id, captured_at, rid, restore="BLOCKED" if a.get("decision") == "deny" else "ALLOWED", **kw)
 
+
+    # ---- screenshots and PDFs tied to a subject by a catalog link event -------------------------
+
+    def load_links(self, docs: dict[str, tuple[str, str, str]]) -> set[str]:
+        """Observe the resource each LINK_RESOURCE_IDENTITY event names, reading its state from the image/PDF it was linked from.
+
+        The catalog writes the link event LINK_DELAY after the primary file is captured, so the pair is matched on time and
+        confirmed by the resource id or alias appearing in the file. Other resources shown in the same screen are decoys
+        and are not observed. Returns the file ids consumed (primary and supporting).
+        """
+        consumed: set[str] = set()
+        events = self.db.execute("SELECT * FROM activity WHERE event_type='LINK_RESOURCE_IDENTITY'").fetchall()
+        for ev in events:
+            act_id, when, rid, details = ev[0], ev[1], ev[5], ev[7]
+            emails = [e.lower() for e in EMAIL_RE.findall(details)]
+            users = USER_RE.findall(details)
+            alias = (re.search(r"\(([^)]+)\)", details) or [None, rid])[1]
+            tokens = {rid, alias}
+            mentions = {fid: d for fid, d in docs.items() if any(t in d[1] for t in tokens)}
+            primary = [fid for fid, d in mentions.items() if abs((ts_(when) - ts_(d[0])).total_seconds() - LINK_DELAY_S) <= 1]
+            if not primary:
+                continue
+            fid = primary[0]
+            cap, text, _ = docs[fid]
+            consumed |= set(mentions)
+            self.add_link_obs(fid, cap, rid, text, emails, users, act_id, [d[1] for d in mentions.values()])
+        return consumed
+
+    def add_link_obs(self, fid, cap, rid, text, emails, users, act_id, texts) -> None:
+        rtype = type_for(rid)
+        subject = self.db.execute("SELECT name, phone FROM identities WHERE user_id=?", (users[0] if users else "",)).fetchone()
+        low = text.lower()
+        needles = set(emails) | ({subject[0].lower(), norm_phone(subject[1])} if subject else set())
+        exposed = any(n in low or n in norm_phone_text(text) for n in needles if n)
+        flow = restore = None
+        if rtype == "DATA_FLOW":
+            status = re.search(r"Status:\s*(\w+)", text)
+            flow = "DISABLED" if re.search(r"disabled|paused|stopped|inactive", status.group(1) if status else "", re.I) else "ACTIVE"
+        if rtype == "BACKUP_ARCHIVE":
+            restore = "BLOCKED" if re.search(r"restore\s+(blocked|disabled|denied)|deletion block", text, re.I) else "ALLOWED"
+        retention = None
+        for t in texts:
+            m = re.search(r"(?:Expires|Retention end|Retain until|retention until)\D{0,3}\s*(\d{1,2} [A-Z][a-z]{2} \d{4})(?:\s+(\d{2})\D{1,3}(\d{2}))?", t)
+            if m:
+                retention = parse_human_date(m.group(1), m.group(2), m.group(3))
+        self.add_obs(fid, cap, rid, record_type=rtype, copy="link", presence="PRESENT", pii="EXPOSED" if exposed else "CLEAN",
+                     flow=flow, restore=restore, retention_until=retention, source=f"link:{act_id}",
+                     keys={("email", e) for e in emails} | {("user_ref", u) for u in users}, excerpt=text[:600])
+
     # ---- tables from CSVs ----------------------------------------------------------------------
 
     def load_csvs(self) -> None:
@@ -409,6 +476,7 @@ class Builder:
         with open(DATASET / "evidence_files.csv", encoding="utf-8") as fh:
             manifest = list(csv.DictReader(fh))
         vision_dir = REPO / "cache" / "vision"
+        docs: dict[str, tuple[str, str, str]] = {}   # file_id -> (captured_at, text, source) for images and PDFs
         for m in manifest:
             path = DATASET / m["file_path"]
             fid, cap = m["file_id"], m["captured_at"]
@@ -423,11 +491,15 @@ class Builder:
             elif kind == "log":
                 self.load_log(fid, cap, path)
             elif kind == "pdf":
-                self.load_pdf(fid, cap, path)
+                docs[fid] = (cap, "\n".join(page.get_text() for page in pymupdf.open(path)), "pdf")
             elif kind == "png":
                 cached = vision_dir / f"{path.stem}.json"
                 if cached.exists():
-                    self.load_document_text(fid, cap, json.loads(cached.read_text())["text"], "image")
+                    docs[fid] = (cap, json.loads(cached.read_text())["text"], "image")
+        consumed = self.load_links(docs)
+        for fid, (cap, text, source) in docs.items():
+            if fid not in consumed and source == "pdf":
+                self.load_document_text(fid, cap, text, source)
         self.link_orders()
         self.db.commit()
         n_obs = self.db.execute("SELECT COUNT(*) FROM obs").fetchone()[0]

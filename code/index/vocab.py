@@ -31,6 +31,7 @@ PREFIX_TYPES = {
     "marketing": "MARKETING_PROFILE",
     "cache": "CACHE_ENTRY",
     "email_delivery": "EMAIL_DELIVERY_LOG",
+    "object": "SUPPORT_ATTACHMENT",
 }
 
 COLLECTION_TYPES = {

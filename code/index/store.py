@@ -177,14 +177,22 @@ class Index:
             by_copy[o.copy or "-"] = o
         copies = list(by_copy.values())
         rtype = next((o.record_type for o in reversed(obs) if o.record_type), "")
+        presence = "PRESENT" if any(o.presence == "PRESENT" for o in copies) else "ABSENT"
+        restore = "ALLOWED" if any(o.restore == "ALLOWED" for o in copies) else ("BLOCKED" if any(o.restore == "BLOCKED" for o in copies) else None)
+        # An export past its expiry is gone, and an archive past its retention end can no longer be restored (screenshot-derived dates).
+        lapsed = any(o.source.startswith("link:") and o.retention_until and o.retention_until <= audit_at for o in copies)
+        if lapsed and rtype == "USER_EXPORT":
+            presence = "ABSENT"
+        if lapsed and rtype == "BACKUP_ARCHIVE":
+            restore = "BLOCKED"
         return ResourceState(
             resource_id=resource_id,
             system_id=copies[0].system_id,
             record_type=rtype,
-            presence="PRESENT" if any(o.presence == "PRESENT" for o in copies) else "ABSENT",
+            presence=presence,
             pii="EXPOSED" if any(o.pii == "EXPOSED" for o in copies) else ("CLEAN" if any(o.pii == "CLEAN" for o in copies) else None),
             flow="ACTIVE" if any(o.flow == "ACTIVE" for o in copies) else ("DISABLED" if any(o.flow == "DISABLED" for o in copies) else None),
-            restore="ALLOWED" if any(o.restore == "ALLOWED" for o in copies) else ("BLOCKED" if any(o.restore == "BLOCKED" for o in copies) else None),
+            restore=restore,
             retention_until=next((o.retention_until for o in reversed(obs) if o.retention_until), None),
             evidence_id=copies[0].file_id,
             observed_at=latest_time,

@@ -18,12 +18,12 @@ How to use: tick a box (`[x]`) when a task is done and add a one-line note. Keep
 
 ## B. Screenshots, PDFs and the early-audit family (next)
 
-- [~] B1 Vision extractor (`code/index/vision.py`) written. 3 of 11 screenshots extracted in a local gitignored cache. Remaining: run all 11 (`python code/index/vision.py`), then compare against the expected facts in HANDOFF.md section 6.
-- [ ] B2 Index `LINK_RESOURCE_IDENTITY` events as identity links (resource_id, alias, email, user_id, event_time). Match each link's alias to the extracted screenshot or PDF text. Candidates only count when the link event is at or before `audit_at`.
-- [ ] B3 Turn screenshot and PDF content into observations with state: account present, search hit present, data flow active, analytics identifiable, export Ready, support message with identifiers, backup archive listed, marketing profile live, object attachment present, audit record retained, tombstone reference only.
-- [ ] B4 Temporal state at `audit_at`: export `expires_at`, backup "Retention end", `retained_until` / `retention_until`. An export that expired before `audit_at` is absent. Verify: case_52 (audit 19 Jun) has export_1260 present, case_33 (audit 19 Jul) does not.
-- [ ] B5 Re-run the 10 zero-step eval cases (case_33, 34, 35, 39, 50, 52, 53, 55, 61, 63) plus case_45 and case_46, and eyeball each against the screenshot.
-- [ ] B6 Re-score the 32 samples. Must stay at or above 0.875 exact rows, status 1.000.
+- [x] B1 (done 24 Oct: all 11 extracted, checked against HANDOFF section 6; main.py now extracts missing ones) Vision extractor (`code/index/vision.py`) written. 3 of 11 screenshots extracted in a local gitignored cache. Remaining: run all 11 (`python code/index/vision.py`), then compare against the expected facts in HANDOFF.md section 6.
+- [x] B2 (done: build.py load_links, link event pairs with the file captured 7 min earlier) Index `LINK_RESOURCE_IDENTITY` events as identity links (resource_id, alias, email, user_id, event_time). Match each link's alias to the extracted screenshot or PDF text. Candidates only count when the link event is at or before `audit_at`.
+- [x] B3 (done, only the linked resource is observed; other resources on a screen are decoys) Turn screenshot and PDF content into observations with state: account present, search hit present, data flow active, analytics identifiable, export Ready, support message with identifiers, backup archive listed, marketing profile live, object attachment present, audit record retained, tombstone reference only.
+- [x] B4 (done in store.state_at for link-derived dates; case_33 drops the stale export_1260, case_52 keeps it) Temporal state at `audit_at`: export `expires_at`, backup "Retention end", `retained_until` / `retention_until`. An export that expired before `audit_at` is absent. Verify: case_52 (audit 19 Jun) has export_1260 present, case_33 (audit 19 Jul) does not.
+- [x] B5 (done: all 12 now have 1 to 3 plausible steps; gold unknown) Re-run the 10 zero-step eval cases (case_33, 34, 35, 39, 50, 52, 53, 55, 61, 63) plus case_45 and case_46, and eyeball each against the screenshot.
+- [x] B6 (done: samples still status 1.000, exact rows 0.875) Re-score the 32 samples. Must stay at or above 0.875 exact rows, status 1.000.
 
 ## C. Agent layer (LangChain)
 

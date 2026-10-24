@@ -404,3 +404,24 @@ branch=handoff/baseline-pipeline
 repo_root=/home/user/hackerrank-orchestrate-october26
 worktree=main
 parent_agent=none
+
+## [2026-10-24T19:40:00Z] Continue in this session: screenshot and PDF evidence (B1 to B6)
+
+User Prompt (verbatim, secrets redacted):
+no need of a new chat right?  we can continue here itself
+
+Agent Response Summary:
+Confirmed no new chat is needed and continued. Extracted all 11 screenshots, then replaced the generic image loader with a link-based one: each LINK_RESOURCE_IDENTITY event is paired with the file captured 7 minutes earlier and only the linked resource is observed, with state read from the screen (exposure, flow, restore, expiry). Samples stay at status 1.000 and exact rows 0.875, and the 12 screenshot-family cases now produce steps. main.py now extracts any uncached screenshot.
+
+Actions:
+* Ran code/index/vision.py (all 11 PNGs); edited code/index/build.py, store.py, vocab.py, vision.py, code/main.py, TRACKER.md
+* Rebuilt the index, rescored the samples, regenerated output.csv (518 rows, valid)
+* Committed and pushed to handoff/baseline-pipeline
+
+Context:
+tool=Claude Code
+model=claude-sonnet-5-5
+branch=handoff/baseline-pipeline
+repo_root=/home/user/hackerrank-orchestrate-october26
+worktree=main
+parent_agent=none

@@ -160,40 +160,63 @@ def call_model(llm, image_path: Path, retries: int = 6) -> tuple[dict, dict]:
     raise RuntimeError(f"vision extraction failed for {image_path.name}")
 
 
-def main() -> int:
+def extract_all(model: str | None = None, force: bool = False, only: str | None = None) -> tuple[int, int]:
+    """Extract every screenshot that has no valid cache entry. Returns (input tokens, output tokens) spent."""
     import llm_config
 
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default=llm_config.settings()["vision_model"])
-    ap.add_argument("--force", action="store_true")
-    ap.add_argument("--only", help="substring of the image file name")
-    args = ap.parse_args()
-
-    llm = llm_config.chat_model(args.model, max_tokens=3000)
+    model = model or llm_config.settings()["vision_model"]
+    llm = llm_config.chat_model(model, max_tokens=3000)
     vocab = Vocabulary()
     CACHE.mkdir(parents=True, exist_ok=True)
     with open(DATASET / "evidence_files.csv", encoding="utf-8") as fh:
         images = [(r["file_id"], DATASET / r["file_path"]) for r in csv.DictReader(fh) if r["file_path"].endswith(".png")]
     total_in = total_out = 0
     for file_id, path in images:
-        if args.only and args.only not in path.name:
+        if only and only not in path.name:
             continue
         out = CACHE / f"{path.stem}.json"
         digest = sha256_file(path)
-        if out.exists() and not args.force:
+        if out.exists() and not force:
             cached = json.loads(out.read_text())
             if cached.get("sha256") == digest and cached.get("prompt_version") == PROMPT_VERSION:
                 print(f"cached   {path.name}")
                 continue
         raw, usage = call_model(llm, path)
         grounded = ground(raw, vocab)
-        out.write_text(json.dumps({"file_id": file_id, "sha256": digest, "model": args.model, "prompt_version": PROMPT_VERSION,
+        out.write_text(json.dumps({"file_id": file_id, "sha256": digest, "model": model, "prompt_version": PROMPT_VERSION,
                                    "usage": usage, "raw": raw, "extraction": grounded, "text": flatten(grounded)},
                                   indent=1, ensure_ascii=False))
         total_in += usage.get("input_tokens", 0)
         total_out += usage.get("output_tokens", 0)
         print(f"extracted {path.name} in={usage.get('input_tokens')} out={usage.get('output_tokens')}")
-        time.sleep(12)  # stay under per-minute token limits of free tiers
+        time.sleep(1)
+    return total_in, total_out
+
+
+def missing_cache() -> list[str]:
+    """Screenshots without a valid cache entry for the current prompt version."""
+    with open(DATASET / "evidence_files.csv", encoding="utf-8") as fh:
+        images = [DATASET / r["file_path"] for r in csv.DictReader(fh) if r["file_path"].endswith(".png")]
+    missing = []
+    for path in images:
+        out = CACHE / f"{path.stem}.json"
+        try:
+            cached = json.loads(out.read_text())
+            ok = cached.get("sha256") == sha256_file(path) and cached.get("prompt_version") == PROMPT_VERSION
+        except (OSError, json.JSONDecodeError):
+            ok = False
+        if not ok:
+            missing.append(path.name)
+    return missing
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--model")
+    ap.add_argument("--force", action="store_true")
+    ap.add_argument("--only", help="substring of the image file name")
+    args = ap.parse_args()
+    total_in, total_out = extract_all(args.model, args.force, args.only)
     print(f"tokens in={total_in} out={total_out}")
     return 0
 

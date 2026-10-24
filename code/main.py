@@ -16,6 +16,20 @@ from runner.investigate import load_cases  # noqa: E402
 REPO = Path(__file__).resolve().parents[1]
 
 
+def ensure_screenshots() -> None:
+    """Screenshots carry the state of 12 cases, so extract any that are not cached yet (needs OPENAI_API_KEY)."""
+    from index import vision
+
+    missing = vision.missing_cache()
+    if not missing:
+        return
+    try:
+        spent = vision.extract_all()
+        print(f"vision: extracted {len(missing)} screenshots (tokens in/out {spent[0]}/{spent[1]})")
+    except Exception as e:  # without a model the screenshot cases fall back to empty evidence
+        print(f"WARNING: could not read {len(missing)} screenshots ({e}); their cases will be wrong", file=sys.stderr)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--split", choices=["sample", "eval"], default="eval")
@@ -24,6 +38,7 @@ def main() -> int:
     args = ap.parse_args()
 
     if not args.skip_index:
+        ensure_screenshots()
         Builder().run()
     index = Index()
     cases = load_cases("sample_deletion_requests.csv" if args.split == "sample" else "deletion_requests.csv")
